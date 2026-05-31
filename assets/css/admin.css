@@ -1,0 +1,205 @@
+.etch-central-admin {
+    --etch-central-surface: #ffffff;
+    --etch-central-border: #dcdcde;
+    --etch-central-text: #1d2327;
+    --etch-central-muted: #50575e;
+    --etch-central-accent: #2271b1;
+    max-inline-size: 1120px;
+}
+
+.etch-central-admin__hero {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block: 1.5rem;
+    padding: 1.5rem;
+    color: var(--etch-central-text);
+    background: var(--etch-central-surface);
+    border: 1px solid var(--etch-central-border);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+}
+.etch-central-admin__hero-content{
+	display: flex;
+	flex-direction:column;
+}
+.etch-central-admin__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block: 0.15rem 0.5rem;
+    font-size: clamp(1.75rem, 2vw, 2.5rem)!important;
+    font-weight: 700!important;
+    line-height: 1.1!important;
+}
+
+.etch-central-admin__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 1.25em;
+    block-size: 1.25em;
+    color: #1168cc;
+    flex: 0 0 auto;
+}
+
+.etch-central-admin__icon svg {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+}
+
+.etch-central-admin__cleanup {
+    display: grid;
+    gap: 0.25rem;
+    margin-block-start: 1rem;
+    padding-block-start: 1rem;
+    border-block-start: 1px solid var(--etch-central-border);
+}
+
+.etch-central-admin__cleanup .description {
+    margin: 0;
+    color: var(--etch-central-muted);
+}
+
+.etch-central-admin__hero p {
+    max-inline-size: 68ch;
+    margin: 0;
+    color: var(--etch-central-muted);
+    font-size: 1rem;
+}
+
+.etch-central-admin__eyebrow {
+    color: var(--etch-central-accent) !important;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+	order:-1;
+}
+
+.etch-central-admin__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+    gap: 1rem;
+}
+
+.etch-central-card {
+    padding: 1.25rem;
+    background: var(--etch-central-surface);
+    border: 1px solid var(--etch-central-border);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+}
+
+.etch-central-card--wide,
+.etch-central-admin__actions {
+    grid-column: 1 / -1;
+}
+
+.etch-central-card h2 {
+    margin-block-start: 0;
+    font-size: 1.25rem;
+}
+
+.etch-central-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-block-size: 2.5rem;
+    font-weight: 600;
+}
+
+.etch-central-toggle input {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+}
+
+.etch-central-links {
+    display: grid;
+    gap: 1rem;
+}
+
+.etch-central-link-row {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) minmax(16rem, 2fr);
+    gap: 1rem;
+    align-items: end;
+}
+
+.etch-central-link-row label {
+    display: grid;
+    gap: 0.35rem;
+    font-weight: 600;
+}
+
+.etch-central-link-row input {
+    inline-size: 100%;
+    min-block-size: 2.5rem;
+}
+
+.etch-central-admin__actions .submit {
+    margin-block: 0.5rem 0;
+}
+
+@media (max-width: 782px) {
+    .etch-central-link-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.etch-central-link-row {
+    position: relative;
+    grid-template-columns: auto minmax(12rem, 1fr) minmax(16rem, 2fr);
+    padding: 0.75rem;
+    background: #f6f7f7;
+    border: 1px solid var(--etch-central-border);
+    border-radius: 12px;
+}
+
+.etch-central-link-row.is-dragging {
+    opacity: 0.55;
+}
+
+.etch-central-link-row__tools {
+    display: flex;
+    align-items: end;
+    gap: 0.35rem;
+    min-block-size: 100%;
+}
+
+.etch-central-drag-handle,
+.etch-central-move-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 2.25rem;
+    min-block-size: 2.25rem;
+    padding: 0.35rem 0.5rem;
+    color: var(--etch-central-text);
+    background: #fff;
+    border: 1px solid var(--etch-central-border);
+    border-radius: 8px;
+    cursor: grab;
+}
+
+.etch-central-move-button {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.etch-central-drag-handle:focus-visible,
+.etch-central-move-button:focus-visible,
+.etch-central-link-row input:focus-visible {
+    outline: 2px solid var(--etch-central-accent);
+    outline-offset: 2px;
+}
+
+@media (max-width: 782px) {
+    .etch-central-link-row {
+        grid-template-columns: 1fr;
+    }
+
+    .etch-central-link-row__tools {
+        align-items: center;
+    }
+}
