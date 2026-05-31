@@ -65,6 +65,7 @@ final class Admin_Bar {
             $admin_bar->add_node([
                 'id'     => 'etch-central-edit-content',
                 'parent' => 'etch-central',
+                /* translators: %s: Post title. */
                 'title'  => esc_html(sprintf(__('Edit %s', 'etch-central'), $title ?: __('this content', 'etch-central'))),
                 'href'   => esc_url($content_url),
                 'meta'   => ['title' => __('Open this content in the Etch editor', 'etch-central')],
@@ -74,6 +75,7 @@ final class Admin_Bar {
         if ($template_data && $current_context) {
             $admin_bar->add_node([
                 'id'     => 'etch-central-edit-template',
+                 /* translators: %s: Template label. */
                 'parent' => 'etch-central',
                 'title'  => esc_html(sprintf(__('Edit %s Template', 'etch-central'), $template_data['label'])),
                 'href'   => esc_url($this->etch_editor_url((int) $template_data['id'], (int) $current_context['original_post_id'])),
@@ -330,6 +332,7 @@ final class Admin_Bar {
                 'title'  => esc_html((string) $link['label']),
                 'href'   => esc_url((string) $link['url']),
                 'meta'   => [
+                    /* translators: %s: Resource name. */
                     'target' => '_blank',
                     'rel'    => 'noopener noreferrer',
                     'title'  => sprintf(__('Open %s in a new tab', 'etch-central'), (string) $link['label']),
