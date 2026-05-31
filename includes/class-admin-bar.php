@@ -77,6 +77,7 @@ final class Admin_Bar {
                 'id'     => 'etch-central-edit-template',
                  /* translators: %s: Template label. */
                 'parent' => 'etch-central',
+				/* translators: %s: Templates. */
                 'title'  => esc_html(sprintf(__('Edit %s Template', 'etch-central'), $template_data['label'])),
                 'href'   => esc_url($this->etch_editor_url((int) $template_data['id'], (int) $current_context['original_post_id'])),
                 'meta'   => ['title' => __('Open this template in the Etch editor', 'etch-central')],
@@ -335,6 +336,7 @@ final class Admin_Bar {
                     /* translators: %s: Resource name. */
                     'target' => '_blank',
                     'rel'    => 'noopener noreferrer',
+					/* translators: %s: Resources. */
                     'title'  => sprintf(__('Open %s in a new tab', 'etch-central'), (string) $link['label']),
                 ],
             ]);
