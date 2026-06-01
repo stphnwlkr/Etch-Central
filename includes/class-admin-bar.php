@@ -43,7 +43,9 @@ final class Admin_Bar {
             'id'    => 'etch-central',
             'title' => 'Etch Central <span class="dashicons dashicons-arrow-down-alt2" style="font-family:dashicons;font-size:14px;line-height:34px;"></span>',
             'href'  => false,
-            'meta'  => ['title' => __('Etch Central tools', 'etch-central')],
+            'meta'  => [
+                'title' => __('Etch Central tools', 'etch-central'),
+            ],
         ]);
 
         if (is_admin()) {
@@ -55,13 +57,16 @@ final class Admin_Bar {
                     'parent' => 'etch-central',
                     'title'  => esc_html__('Launch Etch', 'etch-central'),
                     'href'   => esc_url($this->etch_editor_url($homepage_id, 0)),
-                    'meta'   => ['title' => __('Open the assigned homepage in the Etch editor', 'etch-central')],
+                    'meta'   => [
+                        'title' => __('Open the assigned homepage in the Etch editor', 'etch-central'),
+                    ],
                 ]);
             }
         }
 
         if ($content_url && is_singular()) {
-            $title = get_the_title((int) get_queried_object_id());
+            $title         = get_the_title((int) get_queried_object_id());
+            $content_label = $title ?: esc_html__('this content', 'etch-central');
 
             $admin_bar->add_node([
                 'id'     => 'etch-central-edit-content',
@@ -70,11 +75,13 @@ final class Admin_Bar {
                     sprintf(
                         /* translators: %s: Post title. */
                         __('Edit %s', 'etch-central'),
-                        $title ?: __('this content', 'etch-central')
+                        $content_label
                     )
                 ),
                 'href'   => esc_url($content_url),
-                'meta'   => ['title' => __('Open this content in the Etch editor', 'etch-central')],
+                'meta'   => [
+                    'title' => __('Open this content in the Etch editor', 'etch-central'),
+                ],
             ]);
         }
 
@@ -90,7 +97,9 @@ final class Admin_Bar {
                     )
                 ),
                 'href'   => esc_url($this->etch_editor_url((int) $template_data['id'], (int) $current_context['original_post_id'])),
-                'meta'   => ['title' => __('Open this template in the Etch editor', 'etch-central')],
+                'meta'   => [
+                    'title' => __('Open this template in the Etch editor', 'etch-central'),
+                ],
             ]);
         }
 
@@ -121,23 +130,9 @@ final class Admin_Bar {
         }
 
         $admin_bar->add_node([
-            'id'     => 'etch-central-settings-separator',
-            'parent' => 'etch-central',
-            'title'  => '',
-            'href'   => false,
-            'meta'   => [
-                'class' => 'etch-central-separator',
-            ],
-        ]);
-
-        $admin_bar->add_node([
             'id'     => 'etch-central-settings',
             'parent' => 'etch-central',
-            'title'  => sprintf(
-                '%s %s',
-                '<span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>',
-                esc_html__('Etch Central Settings', 'etch-central')
-            ),
+            'title'  => esc_html__('Etch Central Settings', 'etch-central'),
             'href'   => esc_url(admin_url('options-general.php?page=etch-central')),
             'meta'   => [
                 'title' => esc_attr__('Open Etch Central settings', 'etch-central'),
@@ -205,11 +200,17 @@ final class Admin_Bar {
         }
 
         if (is_404()) {
-            return ['original_post_id' => 0, 'candidates' => ['404', 'index']];
+            return [
+                'original_post_id' => 0,
+                'candidates'       => ['404', 'index'],
+            ];
         }
 
         if (is_search()) {
-            return ['original_post_id' => 0, 'candidates' => ['search', 'index']];
+            return [
+                'original_post_id' => 0,
+                'candidates'       => ['search', 'index'],
+            ];
         }
 
         return null;
@@ -259,7 +260,9 @@ final class Admin_Bar {
             'parent' => 'etch-central',
             'title'  => __('All Templates', 'etch-central'),
             'href'   => false,
-            'meta'   => ['class' => 'etch-central-click-submenu'],
+            'meta'   => [
+                'class' => 'etch-central-click-submenu',
+            ],
         ]);
 
         $templates = get_posts([
@@ -295,7 +298,9 @@ final class Admin_Bar {
             'parent' => 'etch-central',
             'title'  => __('All Patterns', 'etch-central'),
             'href'   => false,
-            'meta'   => ['class' => 'etch-central-click-submenu'],
+            'meta'   => [
+                'class' => 'etch-central-click-submenu',
+            ],
         ]);
 
         $patterns = get_posts([
@@ -369,7 +374,9 @@ final class Admin_Bar {
             'parent' => 'etch-central',
             'title'  => esc_html($title),
             'href'   => false,
-            'meta'   => ['class' => 'etch-central-click-submenu'],
+            'meta'   => [
+                'class' => 'etch-central-click-submenu',
+            ],
         ]);
 
         foreach ($links as $index => $link) {
@@ -377,18 +384,21 @@ final class Admin_Bar {
                 continue;
             }
 
+            $label = (string) $link['label'];
+            $url   = (string) $link['url'];
+
             $admin_bar->add_node([
-                'id'     => $id . '-' . sanitize_title((string) $link['label']) . '-' . (int) $index,
+                'id'     => $id . '-' . sanitize_title($label) . '-' . (int) $index,
                 'parent' => $id,
-                'title'  => esc_html((string) $link['label']),
-                'href'   => esc_url((string) $link['url']),
+                'title'  => esc_html($label),
+                'href'   => esc_url($url),
                 'meta'   => [
                     'target' => '_blank',
                     'rel'    => 'noopener noreferrer',
                     'title'  => sprintf(
                         /* translators: %s: Resource or community link label. */
                         __('Open %s in a new tab', 'etch-central'),
-                        (string) $link['label']
+                        $label
                     ),
                 ],
             ]);
@@ -397,10 +407,22 @@ final class Admin_Bar {
 
     private function resource_links(): array {
         return [
-            ['label' => 'Etch Documentation', 'url' => 'https://docs.etchwp.com/'],
-            ['label' => 'Etch Patterns', 'url' => 'https://patterns.etchwp.com/'],
-            ['label' => 'Etch Circle Community', 'url' => 'https://community.etchwp.com/'],
-            ['label' => 'EtchWP Homepage', 'url' => 'https://etchwp.com/?aff=77d60d8c'],
+            [
+                'label' => 'Etch Documentation',
+                'url'   => 'https://docs.etchwp.com/',
+            ],
+            [
+                'label' => 'Etch Patterns',
+                'url'   => 'https://patterns.etchwp.com/',
+            ],
+            [
+                'label' => 'Etch Circle Community',
+                'url'   => 'https://community.etchwp.com/',
+            ],
+            [
+                'label' => 'EtchWP Homepage',
+                'url'   => 'https://etchwp.com/?aff=77d60d8c',
+            ],
         ];
     }
 
