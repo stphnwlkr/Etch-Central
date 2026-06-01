@@ -68,7 +68,6 @@ final class Admin_Bar {
             $title         = get_the_title((int) get_queried_object_id());
             $content_label = $title ?: esc_html__('this content', 'etch-central');
 
-
             $admin_bar->add_node([
                 'id'     => 'etch-central-edit-content',
                 'parent' => 'etch-central',
@@ -76,23 +75,64 @@ final class Admin_Bar {
                     sprintf(
                         /* translators: %s: Post title. */
                         __('Edit %s', 'etch-central'),
-            'id'     => 'etch-central-settings-separator',
-            'parent' => 'etch-central',
-            'title'  => '',
-            'href'   => false,
-            'meta'   => [
-                'class' => 'etch-central-separator',
-            ],
-        ]);
+                        $content_label
+                    )
+                ),
+                'href'   => esc_url($content_url),
+                'meta'   => [
+                    'title' => __('Open this content in the Etch editor', 'etch-central'),
+                ],
+            ]);
+        }
+
+        if ($template_data && $current_context) {
+            $admin_bar->add_node([
+                'id'     => 'etch-central-edit-template',
+                'parent' => 'etch-central',
+                'title'  => esc_html(
+                    sprintf(
+                        /* translators: %s: Template label. */
+                        __('Edit %s Template', 'etch-central'),
+                        $template_data['label']
+                    )
+                ),
+                'href'   => esc_url($this->etch_editor_url((int) $template_data['id'], (int) $current_context['original_post_id'])),
+                'meta'   => [
+                    'title' => __('Open this template in the Etch editor', 'etch-central'),
+                ],
+            ]);
+        }
+
+        if (!empty($settings['enabled_menus']['templates'])) {
+            $this->add_templates_menu($admin_bar);
+        }
+
+        if (!empty($settings['enabled_menus']['patterns'])) {
+            $this->add_patterns_menu($admin_bar);
+        }
+
+        if (!empty($settings['enabled_menus']['resources'])) {
+            $this->add_static_links_menu(
+                $admin_bar,
+                'etch-central-resources',
+                __('Etch Resources', 'etch-central'),
+                $this->resource_links()
+            );
+        }
+
+        if (!empty($settings['enabled_menus']['community'])) {
+            $this->add_static_links_menu(
+                $admin_bar,
+                'etch-central-community',
+                __('Etch Community', 'etch-central'),
+                (array) $settings['community_links']
+            );
+        }
 
         $admin_bar->add_node([
             'id'     => 'etch-central-settings',
             'parent' => 'etch-central',
-            'title'  => sprintf(
-                '%s %s',
-                '<span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>',
-                esc_html__('Etch Central Settings', 'etch-central')
-            ),
+            'title'  => esc_html__('Etch Central Settings', 'etch-central'),
             'href'   => esc_url(admin_url('options-general.php?page=etch-central')),
             'meta'   => [
                 'title' => esc_attr__('Open Etch Central settings', 'etch-central'),
