@@ -444,6 +444,14 @@ Each saved community link must include both a label and a valid URL. Blank rows 
 The cleanup setting was likely enabled. When enabled, Etch Central deletes the `etch_central_settings` option during deactivation.
 
 ## Changelog
+### 0.4.2
+#### Added
+- Admin bar shortcut to Etch Central Settings.
+- Visual divider separating tools from plugin configuration.
+
+#### Improved
+- Better discoverability of plugin settings from the admin bar.
+
 ### 0.4.1
 - fixed folder structure.
 - Added translation comments.
