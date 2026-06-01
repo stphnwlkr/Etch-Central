@@ -128,7 +128,6 @@ final class Admin_Bar {
                 (array) $settings['community_links']
             );
         }
-
         $admin_bar->add_node([
             'id'     => 'etch-central-settings',
             'parent' => 'etch-central',

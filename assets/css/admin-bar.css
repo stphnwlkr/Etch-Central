@@ -20,7 +20,7 @@
     line-height: 1.15 !important;
     height: auto !important;
     min-height: 1em !important;
-
+    padding-block: 0.5em !important;
 }
 
 #wpadminbar li#wp-admin-bar-etch-central-all-templates > .ab-sub-wrapper,

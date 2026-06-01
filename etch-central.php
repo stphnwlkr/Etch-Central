@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Etch Central
  * Description: Adds an Etch Central admin bar menu for editing current content, templates, patterns, resources, and community links.
- * Version: 0.4.2
+ * Version: 0.4.2.1
  * Requires at least: 6.9.4
  * Requires PHP: 8.3
  * Tested up to: 7.0
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('ETCH_CENTRAL_VERSION', '0.4.2');
+define('ETCH_CENTRAL_VERSION', '0.4.2.1');
 define('ETCH_CENTRAL_FILE', __FILE__);
 define('ETCH_CENTRAL_PATH', plugin_dir_path(__FILE__));
 define('ETCH_CENTRAL_URL', plugin_dir_url(__FILE__));
