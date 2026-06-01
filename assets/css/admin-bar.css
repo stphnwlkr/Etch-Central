@@ -20,7 +20,7 @@
     line-height: 1.15 !important;
     height: auto !important;
     min-height: 1em !important;
-    padding-block: 0.5em !important;
+
 }
 
 #wpadminbar li#wp-admin-bar-etch-central-all-templates > .ab-sub-wrapper,
@@ -197,4 +197,10 @@ a.ab-item:has(.etch-central-pattern-menu-item) {
 
 #wpadminbar #wp-admin-bar-etch-central .etch-central-click-submenu > .ab-item {
     cursor: pointer;
+}
+#wpadminbar #wp-admin-bar-etch-central-settings {
+
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+    	padding-block:.15em!important;
+	margin-block-start:.25em!important;
 }
