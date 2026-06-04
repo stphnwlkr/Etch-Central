@@ -49,19 +49,21 @@ final class Admin_Page {
                         <span><?php esc_html_e('Etch Central', 'etch-central'); ?></span>
                     </h1>
 					 <p class="etch-central-admin__eyebrow"><?php esc_html_e('WordPress admin bar tools', 'etch-central'); ?></p>
-                    <p><?php esc_html_e('Manage quick access to Etch templates, patterns, resources, and community links.', 'etch-central'); ?></p>
-                    <div class="etch-central-admin__cleanup">
-                        <label class="etch-central-toggle">
-                            <input type="checkbox" name="<?php echo esc_attr(Settings::OPTION_KEY); ?>[cleanup_on_deactivation]" value="1" <?php checked(!empty($settings['cleanup_on_deactivation'])); ?>>
-                            <span><?php esc_html_e('Remove all Etch Central settings when deactivated', 'etch-central'); ?></span>
-                        </label>
-                        <p class="description"><?php esc_html_e('Recommended only for Git-based deployments where plugin uninstall may not be used.', 'etch-central'); ?></p>
-                    </div>
+                    <p><?php esc_html_e('Manage quick access to Etch templates, patterns, content, resources, and shortcuts.', 'etch-central'); ?></p>
                 </div>
             </header>
 
             <form method="post" action="options.php" class="etch-central-admin__grid">
                 <?php settings_fields('etch_central_settings_group'); ?>
+
+                <section class="etch-central-card" aria-labelledby="etch-central-cleanup-title">
+                    <h2 id="etch-central-cleanup-title"><?php esc_html_e('Plugin cleanup', 'etch-central'); ?></h2>
+                    <label class="etch-central-toggle">
+                        <input type="checkbox" name="<?php echo esc_attr(Settings::OPTION_KEY); ?>[cleanup_on_deactivation]" value="1" <?php checked(!empty($settings['cleanup_on_deactivation'])); ?>>
+                        <span><?php esc_html_e('Remove all Etch Central settings when deactivated', 'etch-central'); ?></span>
+                    </label>
+                    <p class="description"><?php esc_html_e('Recommended only for Git-based deployments where plugin uninstall may not be used.', 'etch-central'); ?></p>
+                </section>
 
                 <section class="etch-central-card" aria-labelledby="etch-central-menus-title">
                     <h2 id="etch-central-menus-title"><?php esc_html_e('Admin bar menus', 'etch-central'); ?></h2>
@@ -69,6 +71,35 @@ final class Admin_Page {
                         <label class="etch-central-toggle">
                             <input type="checkbox" name="<?php echo esc_attr(Settings::OPTION_KEY); ?>[enabled_menus][<?php echo esc_attr((string) $key); ?>]" value="1" <?php checked($enabled); ?>>
                             <span><?php echo esc_html(ucwords(str_replace('_', ' ', (string) $key))); ?></span>
+                        </label>
+                    <?php endforeach; ?>
+                </section>
+
+                <section class="etch-central-card" aria-labelledby="etch-central-content-types-title">
+                    <h2 id="etch-central-content-types-title"><?php esc_html_e('Content type browsers', 'etch-central'); ?></h2>
+                    <p><?php esc_html_e('Enable searchable admin bar flyouts for published pages, posts, and public custom post types. All are off by default.', 'etch-central'); ?></p>
+                    <?php
+                    $post_types = get_post_types(
+                        [
+                            'public' => true,
+                        ],
+                        'objects'
+                    );
+                    $excluded_post_types = ['attachment', 'wp_block', 'wp_navigation', 'wp_template', 'wp_template_part'];
+                    uasort(
+                        $post_types,
+                        static function ($a, $b): int {
+                            return strcasecmp((string) $a->labels->name, (string) $b->labels->name);
+                        }
+                    );
+                    ?>
+                    <?php foreach ($post_types as $post_type => $post_type_object) : ?>
+                        <?php if (in_array($post_type, $excluded_post_types, true) || !is_post_type_viewable($post_type)) : ?>
+                            <?php continue; ?>
+                        <?php endif; ?>
+                        <label class="etch-central-toggle">
+                            <input type="checkbox" name="<?php echo esc_attr(Settings::OPTION_KEY); ?>[content_types][]" value="<?php echo esc_attr((string) $post_type); ?>" <?php checked(in_array($post_type, (array) $settings['content_types'], true)); ?>>
+                            <span><?php echo esc_html((string) $post_type_object->labels->name); ?></span>
                         </label>
                     <?php endforeach; ?>
                 </section>
@@ -87,10 +118,10 @@ final class Admin_Page {
                 </section>
 
                 <section class="etch-central-card etch-central-card--wide" aria-labelledby="etch-central-community-title">
-                    <h2 id="etch-central-community-title"><?php esc_html_e('Etch Community favorites', 'etch-central'); ?></h2>
-                    <p><?php esc_html_e('Add, remove, edit, or reorder up to 10 community links shown under Etch Central.', 'etch-central'); ?></p>
+                    <h2 id="etch-central-community-title"><?php esc_html_e('My Etch Shortcuts', 'etch-central'); ?></h2>
+                    <p><?php esc_html_e('Add, remove, edit, or reorder up to 10 shortcut links shown under Etch Central.', 'etch-central'); ?></p>
 
-                    <div class="etch-central-links" role="group" aria-label="<?php esc_attr_e('Community links. Drag rows or use Move up and Move down to change order.', 'etch-central'); ?>" data-etch-central-sortable>
+                    <div class="etch-central-links" role="group" aria-label="<?php esc_attr_e('Shortcut links. Drag rows or use Move up and Move down to change order.', 'etch-central'); ?>" data-etch-central-sortable>
                         <?php
                         $links = array_slice((array) $settings['community_links'], 0, 10);
                         while (count($links) < 10) {

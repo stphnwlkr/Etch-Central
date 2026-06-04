@@ -25,6 +25,7 @@ final class Settings {
                 'resources' => true,
                 'community' => true,
             ],
+            'content_types' => [],
             'allowed_roles' => ['administrator'],
             'cleanup_on_deactivation' => false,
             'community_links' => [
@@ -80,6 +81,42 @@ final class Settings {
         );
     }
 
+
+    public function public_post_type_names(): array {
+        $post_types = get_post_types(
+            [
+                'public' => true,
+            ],
+            'objects'
+        );
+
+        $excluded = [
+            'attachment',
+            'wp_block',
+            'wp_navigation',
+            'wp_template',
+            'wp_template_part',
+        ];
+
+        $names = [];
+
+        foreach ($post_types as $post_type => $post_type_object) {
+            if (in_array($post_type, $excluded, true)) {
+                continue;
+            }
+
+            if (!is_post_type_viewable($post_type)) {
+                continue;
+            }
+
+            $names[] = (string) $post_type;
+        }
+
+        sort($names);
+
+        return $names;
+    }
+
     public function sanitize($value): array {
         $defaults = $this->defaults();
         $value    = is_array($value) ? wp_unslash($value) : [];
@@ -91,6 +128,21 @@ final class Settings {
             'resources' => !empty($value['enabled_menus']['resources']),
             'community' => !empty($value['enabled_menus']['community']),
         ];
+
+        $settings['content_types'] = [];
+        $allowed_post_types = $this->public_post_type_names();
+
+        if (!empty($value['content_types']) && is_array($value['content_types'])) {
+            foreach ($value['content_types'] as $post_type) {
+                $post_type = sanitize_key((string) $post_type);
+
+                if ($post_type && in_array($post_type, $allowed_post_types, true)) {
+                    $settings['content_types'][] = $post_type;
+                }
+            }
+        }
+
+        $settings['content_types'] = array_values(array_unique($settings['content_types']));
 
         $settings['allowed_roles'] = [];
         $editable_roles = array_keys(get_editable_roles());
