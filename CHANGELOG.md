@@ -2,11 +2,13 @@
 
 All notable Etch Central changes are documented here, including the iteration history that led to the stable 1.0.0 launcher.
 
+
 ## 1.0.2
 
-### Fixed
-
-- Adjusted link spacing
+- Refined admin bar panel spacing and link rhythm.
+- Added stronger CSS isolation from theme/framework layout systems.
+- Normalized panel gaps, list spacing, link padding, and browser search padding.
+- Preserved the 1.0.x command center structure and Etch resource behavior.
 
 ## 1.0.1
 

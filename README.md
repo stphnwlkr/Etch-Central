@@ -2,7 +2,7 @@
 
 Etch Central is a WordPress admin bar launcher for Etch-powered sites. It provides one central place to open the current content item, current template, templates, patterns, enabled content types, Etch resources, and personal Etch shortcuts.
 
-Version 1.0.0 marked the command-center launcher as the stable direction for the plugin. Version 1.0.1 includes maintenance fixes for Etch Resources and static shortcut spacing.
+Version 1.0.0 marked the command-center launcher as the stable direction for the plugin. Version 1.0.2 includes additional admin bar layout isolation and link spacing fixes for the command center panel.
 
 ## What Etch Central Does
 
