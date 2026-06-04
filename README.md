@@ -1,43 +1,44 @@
 # Etch Central
 
-Etch Central adds a consolidated WordPress admin bar hub for Etch-powered sites. It brings together quick access to the current content item, the active template, all site templates, reusable patterns, official Etch resources, and user-managed community links.
+Etch Central is a WordPress admin bar launcher for Etch-powered sites. It provides one central place to open the current content item, current template, templates, patterns, enabled content types, Etch resources, and personal Etch shortcuts.
 
-The plugin is intended for teams that work heavily in Etch and want a faster, cleaner way to move between WordPress, the Etch editor, templates, patterns, documentation, and community resources.
+Version 1.0.0 marks the command-center launcher as the stable direction for the plugin.
 
-## Features
+## What Etch Central Does
 
-- Adds an **Etch Central** menu to the WordPress admin bar.
-- Replaces the default **Edit with Etch** admin bar item with a more organized menu.
-- Adds **Launch Etch** on admin screens when a static homepage is configured in **Settings > Reading**.
-- Adds a direct **Edit current content** link on singular front-end views.
-- Adds a direct **Edit current template** link when the active WordPress template can be identified.
-- Adds an **All Templates** submenu listing published WordPress templates.
-- Adds an **All Patterns** submenu listing published WordPress patterns.
-- Adds search fields for long template and pattern lists.
-- Keeps template and pattern search fields fixed above the scrollable list area.
-- Uses click-controlled child panels for template, pattern, resource, and community submenus.
-- Shows pattern sync status with compact indicators:
-  - **S** = Synced
-  - **P** = Partially synced
-  - **N** = Not synced
+Etch Central reduces the amount of WordPress navigation needed when building with Etch. Instead of jumping between the dashboard, site editor, templates, patterns, and front-end edit links, users can open the Etch Central launcher from the admin bar and move directly to the thing they need.
+
+The plugin is intentionally a launcher, not a replacement for the native WordPress or Etch command palettes.
+
+## Key Features
+
+- Adds an **Etch Central** item to the WordPress admin bar.
+- Uses a compact command-center style launcher.
+- Provides left-column navigation and right-column searchable panels.
+- Shows context-aware links for the current content item when available.
+- Shows a current template link when the active WordPress template can be resolved.
+- Provides searchable browsers for templates and patterns.
+- Provides optional searchable browsers for enabled public post types.
+- Keeps content-type browsers disabled by default.
 - Includes official Etch resource links.
-- Includes editable Etch Community favorite links.
-- Allows up to 10 custom community links.
-- Supports drag-and-drop ordering for community links.
-- Includes keyboard-accessible **Up** and **Down** controls for reordering links.
-- Allows admins to enable or disable individual submenus.
-- Allows admins to select which WordPress roles can see Etch Central.
-- Includes an optional setting to delete plugin settings on deactivation.
-- Uses separate PHP classes and separate CSS/JS assets for maintainability.
+- Includes user-managed **My Etch Shortcuts** links.
+- Supports up to 10 custom shortcuts.
+- Supports drag-and-drop shortcut ordering in settings.
+- Includes keyboard-accessible move up/down controls for shortcut ordering.
+- Allows admins to choose which roles can see Etch Central.
+- Allows individual launcher sections to be enabled or disabled.
+- Includes optional cleanup of plugin settings on deactivation.
+- Includes focus, spacing, and overflow refinements for accessibility.
+- Isolates the launcher UI from common theme and framework spacing rules, including Automatic CSS section gap defaults.
 
 ## Requirements
 
 - WordPress 6.9.4 or later.
 - PHP 8.3 or later.
 - Etch must be installed and active.
-- A user must be logged in and assigned to an allowed role.
+- A logged-in user with an allowed role.
 
-The plugin checks for the Etch plugin class before adding the admin bar menu. If Etch is not active, Etch Central will not output its admin bar tools.
+Etch Central checks for Etch before outputting its admin bar tools. If Etch is not active, the launcher will not appear.
 
 ## Tested Up To
 
@@ -50,65 +51,61 @@ The plugin checks for the Etch plugin class before adding the admin bar menu. If
 3. Choose **Upload Plugin**.
 4. Upload the ZIP file.
 5. Activate **Etch Central**.
-6. Go to **Settings > Etch Central** to configure available menus, roles, community links, and cleanup behavior.
+6. Go to **Settings > Etch Central** to configure menus, content types, roles, shortcuts, and cleanup behavior.
 
-## Git-Based Installation
-
-For Git-based deployments, place the plugin folder in:
+For Git-based deployments, keep the plugin folder name as:
 
 ```text
 wp-content/plugins/etch-central/
 ```
 
-Then activate it through the WordPress admin or your deployment workflow.
+## Launcher Interface
 
-If plugin removal is managed through Git rather than the WordPress Plugins screen, use the optional **Remove all Etch Central settings when deactivated** setting if you want the plugin option removed during deactivation.
-
-## Admin Bar Menu
-
-When enabled and available to the current user, the plugin adds an **Etch Central** menu to the WordPress admin bar.
-
-### Launch Etch
-
-On admin screens, **Launch Etch** appears at the top of the Etch Central menu when WordPress is configured to use a static homepage.
-
-This link opens:
+Etch Central 1.0.0 uses a two-panel command-center style launcher.
 
 ```text
-/?etch=magic&post_id={homepage_id}
+Etch Central
+├── Left panel: navigation groups
+└── Right panel: searchable lists and links
 ```
 
-This follows the default Etch behavior for launching the homepage into Etch.
+The left panel provides high-level navigation. The right panel changes based on the selected item and contains the search field and result list for that section.
 
-The item only appears when:
+Primary groups include:
 
-- The current screen is in the WordPress admin.
-- **Settings > Reading** is configured to show a static page on the front page.
-- A homepage is assigned.
+- Current Content
+- Content Types
+- Etch Assets
+- Resources
+- Administration
 
-### Edit Current Content
+Separators are not rendered as fake menu items. The launcher uses real headings and grouped panels so the structure is cleaner for keyboard and screen-reader users.
 
-On singular front-end views, Etch Central adds a link for the current content item, such as:
+## Current Content
 
-```text
-Edit Home
-Edit About
-Edit Sample Post
-```
-
-The plugin uses the existing Etch admin bar URL when available, preserving Etch’s own editor URL behavior.
-
-### Edit Current Template
-
-When the current template can be resolved, Etch Central adds a direct editor link for that template.
+On singular front-end views, Etch Central can show the current post, page, or custom post type item.
 
 Examples:
 
 ```text
-Edit Home Template
-Edit Page Template
-Edit Single Post Template
-Edit Index Template
+Current Page: Home
+Current Post: News Update
+Current Event: Open House
+```
+
+The normal click behavior opens the item in Etch.
+
+## Current Template
+
+When the active WordPress template can be resolved, Etch Central adds a direct current-template item.
+
+Examples:
+
+```text
+Current Template: Home
+Current Template: Page
+Current Template: Single Post
+Current Template: Index
 ```
 
 Template detection is based on the current WordPress request context and checks likely template slugs in priority order.
@@ -134,36 +131,82 @@ index
 
 For archives and taxonomy views, archive and taxonomy template candidates are used.
 
-## All Templates
+## Editor Click Behavior
 
-The **All Templates** submenu lists published `wp_template` posts and opens each one directly in the Etch editor.
+For supported content, template, and pattern links:
 
-The submenu includes:
+```text
+Click
+  Open in Etch
 
-- A search field fixed above the list.
-- A scrollable list capped at a viewport-friendly height.
+Cmd/Ctrl + Click
+  Open in Etch in a new tab
+
+Option/Alt + Click
+  Open in the WordPress editor
+
+Cmd/Ctrl + Option/Alt + Click
+  Open in the WordPress editor in a new tab
+```
+
+This keeps normal browser new-tab behavior while adding a low-visual-noise way to access the WordPress editor.
+
+## Content Type Browsers
+
+Admins can enable searchable browsers for public, viewable WordPress post types from **Settings > Etch Central**.
+
+All content-type browsers are off by default.
+
+Each enabled content type appears in the launcher and opens a searchable right-panel list of published items.
+
+Examples:
+
+```text
+Pages
+Posts
+Events
+Products
+```
+
+Each content-type browser includes:
+
+- A search field.
+- Published items ordered alphabetically by title.
+- Direct links into Etch.
+- Alternate click behavior for opening the WordPress editor.
+
+By default, each content-type browser lists up to 200 published items.
+
+## Templates
+
+The template browser lists published `wp_template` posts and opens each one directly in Etch.
+
+The template browser includes:
+
+- A search field.
+- A scrollable results list.
 - Wrapped text for longer template names.
-- Click-controlled panel behavior instead of hover-only behavior.
+- The same launcher panel behavior used by content types and patterns.
 
-By default, the menu queries up to 50 published templates ordered alphabetically by title.
+By default, the browser queries up to 50 published templates ordered alphabetically by title.
 
-## All Patterns
+## Patterns
 
-The **All Patterns** submenu lists published `wp_block` posts and opens each one directly in the Etch editor.
+The pattern browser lists published `wp_block` posts and opens each one directly in Etch.
 
-The submenu includes:
+The pattern browser includes:
 
-- A search field fixed above the list.
-- A scrollable list capped at a viewport-friendly height.
+- A search field.
+- A scrollable results list.
 - Wrapped pattern titles.
 - Compact sync status indicators.
-- Click-controlled panel behavior instead of hover-only behavior.
+- The same launcher panel behavior used by content types and templates.
 
-By default, the menu queries up to 100 published patterns ordered alphabetically by title.
+By default, the browser queries up to 100 published patterns ordered alphabetically by title.
 
 ## Pattern Sync Indicators
 
-Etch Central displays pattern sync status using a compact boxed indicator.
+Etch Central displays pattern sync status using compact indicators.
 
 | Indicator | Meaning |
 | --- | --- |
@@ -171,13 +214,11 @@ Etch Central displays pattern sync status using a compact boxed indicator.
 | P | Partially synced |
 | N | Not synced |
 
-The visual indicator is intentionally short so long pattern names can wrap while the sync status remains aligned and readable.
-
 The status text is also exposed through `title` and `aria-label` attributes.
 
 ## Etch Resources
 
-The **Etch Resources** submenu includes official Etch links:
+The **Etch Resources** panel includes official Etch links:
 
 - Etch Documentation: <https://docs.etchwp.com/>
 - Etch Patterns: <https://patterns.etchwp.com/>
@@ -186,11 +227,11 @@ The **Etch Resources** submenu includes official Etch links:
 
 Resource links open in a new tab using `target="_blank"` and `rel="noopener noreferrer"`.
 
-## Etch Community
+## My Etch Shortcuts
 
-The **Etch Community** submenu is managed from **Settings > Etch Central**.
+The **My Etch Shortcuts** panel is managed from **Settings > Etch Central**.
 
-Default community links include:
+Default shortcut links include:
 
 - SnippetNest: <https://snippetnest.com/snippets/?_topic=etch>
 - FW Cafe: <https://fwcafe.com/>
@@ -198,7 +239,7 @@ Default community links include:
 - FW Foundry: <https://fwfoundry.com/>
 - Oh My Etch: <https://ohmyetch.com/>
 
-Admins can add, remove, edit, and reorder up to 10 community links.
+Admins can add, remove, edit, and reorder up to 10 shortcut links.
 
 ## Settings
 
@@ -210,26 +251,30 @@ Settings > Etch Central
 
 ### Admin Bar Menus
 
-The following submenus can be enabled or disabled individually:
+The following sections can be enabled or disabled individually:
 
 - Templates
 - Patterns
 - Resources
-- Community
+- My Etch Shortcuts
 
-The primary Etch Central menu can still include context-aware links such as **Launch Etch**, **Edit current content**, and **Edit current template**.
+The primary Etch Central launcher can still include context-aware items such as the current content and current template.
 
 ### Allowed Roles
 
 Administrators are selected by default.
 
-Admins can choose additional roles that may see Etch Central in the admin bar. The setting is role-based and only accepts roles returned by WordPress through `get_editable_roles()`.
+Admins can choose additional roles that may see Etch Central in the admin bar. Role values are restricted to roles returned by WordPress through `get_editable_roles()`.
 
-Users with `manage_options` capability can access the menu even if their role is not explicitly listed.
+Users with `manage_options` capability can access the menu even if their role is not explicitly selected.
 
-### Etch Community Favorites
+### Content Type Browsers
 
-The settings screen provides 10 rows for community favorites.
+The content type browser setting lists public, viewable WordPress post types. All options are off by default. Enabling a post type adds a searchable launcher panel for published items of that type.
+
+### My Etch Shortcuts
+
+The settings screen provides 10 rows for shortcuts.
 
 Each row includes:
 
@@ -258,23 +303,24 @@ Remove all Etch Central settings when deactivated
 
 When enabled, the plugin deletes its settings option during plugin deactivation.
 
-This option is useful for Git-based deployments where a plugin may be added, updated, or removed through source control and the standard WordPress uninstall flow may not be used.
-
 ## Accessibility
 
 Etch Central is designed with accessibility in mind.
 
 Accessibility considerations include:
 
+- The launcher uses section headings instead of fake separator menu items.
+- Search inputs include screen-reader text labels.
+- Search controls include padding so focus outlines remain visible.
+- Focus styles are provided for custom controls.
+- Outer panel scrolling is avoided; only internal lists scroll when needed.
+- The launcher is spatially aware and avoids being clipped on narrower screens.
 - Admin settings are grouped with headings and labeled controls.
 - Form fields use visible labels.
-- Drag-and-drop ordering is supplemented with keyboard-accessible Move Up and Move Down buttons.
-- Search inputs include screen-reader text labels.
+- Drag-and-drop ordering is supplemented with keyboard-accessible move controls.
 - Pattern sync indicators include accessible labels.
-- Focus styles are provided for custom controls.
-- Click-controlled submenu triggers use `aria-haspopup` and `aria-expanded`.
-- Escape closes open click-controlled panels.
 - Long menu text can wrap instead of being clipped.
+- The launcher resets common layout properties so theme/framework styles do not create unexpected spacing.
 
 ## Security
 
@@ -300,9 +346,7 @@ Etch Central stores all plugin settings in a single WordPress option:
 etch_central_settings
 ```
 
-The plugin does not create custom database tables.
-
-The plugin does not create custom post types, taxonomies, users, roles, or capabilities.
+The plugin does not create custom database tables, custom post types, taxonomies, users, roles, or capabilities.
 
 The plugin does not modify Etch data directly. It only generates editor links to existing content, templates, and patterns.
 
@@ -327,6 +371,7 @@ etch-central/
 │   │   └── admin-bar.js
 │   └── images/
 │       └── icon.svg
+├── CHANGELOG.md
 ├── LICENSE
 └── README.md
 ```
@@ -347,7 +392,7 @@ Renders the settings screen under **Settings > Etch Central**.
 
 ### `Admin_Bar`
 
-Builds the Etch Central admin bar menu and related submenus.
+Builds the Etch Central admin bar launcher and related panels.
 
 ### `Assets`
 
@@ -427,64 +472,29 @@ Check that:
 - **Settings > Reading** is set to use a static homepage.
 - A homepage has been selected.
 
-### Template or pattern lists are empty
+Launch Etch intentionally does not appear on the front end.
+
+### Template, pattern, or content-type lists are empty
 
 Check that:
 
 - Published templates exist in `wp_template`.
 - Published patterns exist in `wp_block`.
+- The relevant content type is enabled in **Settings > Etch Central**.
+- Published content exists for the enabled content type.
 - The current user has access to Etch Central.
 
-### Community links are not saving
+### Shortcuts are not saving
 
-Each saved community link must include both a label and a valid URL. Blank rows are ignored.
+Each saved shortcut must include both a label and a valid URL. Blank rows are ignored.
 
 ### Settings are removed after deactivation
 
 The cleanup setting was likely enabled. When enabled, Etch Central deletes the `etch_central_settings` option during deactivation.
 
 ## Changelog
-### 0.4.2
-#### Added
-- Admin bar shortcut to Etch Central Settings.
-- Visual divider separating tools from plugin configuration.
 
-#### Improved
-- Better discoverability of plugin settings from the admin bar.
-
-### 0.4.1
-- fixed folder structure.
-- Added translation comments.
-- Verified with Plugin check. No errors.
-### 0.4.0
-
-- Refactored the plugin into separate maintainable classes.
-- Moved admin and admin bar styles into dedicated asset files.
-- Moved admin and admin bar scripts into dedicated asset files.
-- Kept settings, admin page rendering, admin bar rendering, assets, and deactivation logic separated.
-
-### 0.3.1
-
-- Added hub icon to the admin settings page.
-- Increased settings page title font weight.
-- Moved cleanup setting into the main hero panel.
-
-### 0.3.0
-
-- Added Launch Etch for admin screens when a static homepage is configured.
-
-### 0.2.x
-
-- Added optional cleanup on deactivation.
-- Improved template and pattern submenu behavior.
-- Added fixed search fields for templates and patterns.
-- Added scrollable template and pattern lists.
-- Improved pattern sync indicators.
-
-### 0.1.x
-
-- Initial Etch Central admin bar functionality.
-- Added template, pattern, resource, and community menu foundations.
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
