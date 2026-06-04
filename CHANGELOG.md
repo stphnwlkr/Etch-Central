@@ -2,6 +2,11 @@
 
 All notable Etch Central changes are documented here, including the iteration history that led to the stable 1.0.0 launcher.
 
+## 1.0.2
+
+### Fixed
+
+- Adjusted link spacing
 
 ## 1.0.1
 
