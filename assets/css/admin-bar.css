@@ -1,206 +1,333 @@
-#wpadminbar #wp-admin-bar-etch-central .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central .ab-submenu,
-#wpadminbar #wp-admin-bar-etch-central-all-templates .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central-all-templates .ab-submenu,
-#wpadminbar #wp-admin-bar-etch-central-all-patterns .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central-all-patterns .ab-submenu,
-#wpadminbar #wp-admin-bar-etch-central-resources .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central-resources .ab-submenu,
-#wpadminbar #wp-admin-bar-etch-central-community .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central-community .ab-submenu {
-    width: min(200px, 90vw) !important;
-    max-width: min(200px, 90vw) !important;
-    min-width: min(200px, 90vw) !important;
+#wpadminbar #wp-admin-bar-etch-central > .ab-item {
+    cursor: pointer;
 }
 
-#wpadminbar #wp-admin-bar-etch-central .ab-submenu .ab-item:not(:has(.etch-central-pattern-menu-item)) {
-    box-sizing: border-box;
-    width: 100%;
-    white-space: normal !important;
-    line-height: 1.15 !important;
-    height: auto !important;
-    min-height: 1em !important;
-    padding-block: 0.5em !important;
+#wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper {
+    position: absolute !important;
+    inset-block-start: 100% !important;
+    inset-inline-start: 0 !important;
+    inset-inline-end: auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: calc(100vw - 1rem) !important;
+    inline-size: auto !important;
+    padding: 0 !important;
+    background: #1d2327 !important;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.32);
 }
 
-#wpadminbar li#wp-admin-bar-etch-central-all-templates > .ab-sub-wrapper,
-#wpadminbar li#wp-admin-bar-etch-central-all-patterns > .ab-sub-wrapper {
-    display: flex !important;
-    flex-direction: column;
-    max-block-size: 50svh;
-    overflow: hidden !important;
-}
-
-#wpadminbar li#wp-admin-bar-etch-central-all-templates > .ab-sub-wrapper > .ab-submenu,
-#wpadminbar li#wp-admin-bar-etch-central-all-patterns > .ab-sub-wrapper > .ab-submenu {
-    flex: 1 1 auto;
-    min-block-size: 0;
-    max-block-size: none;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-color: #8c8f94 #1d2327;
-    scrollbar-width: thin;
-}
-
-#wpadminbar li#wp-admin-bar-etch-central-all-templates > .ab-sub-wrapper > .ab-submenu::-webkit-scrollbar,
-#wpadminbar li#wp-admin-bar-etch-central-all-patterns > .ab-sub-wrapper > .ab-submenu::-webkit-scrollbar {
-    inline-size: 0.65rem;
-}
-
-#wpadminbar li#wp-admin-bar-etch-central-all-templates > .ab-sub-wrapper > .ab-submenu::-webkit-scrollbar-track,
-#wpadminbar li#wp-admin-bar-etch-central-all-patterns > .ab-sub-wrapper > .ab-submenu::-webkit-scrollbar-track {
-    background: #1d2327;
-}
-
-#wpadminbar li#wp-admin-bar-etch-central-all-templates > .ab-sub-wrapper > .ab-submenu::-webkit-scrollbar-thumb,
-#wpadminbar li#wp-admin-bar-etch-central-all-patterns > .ab-sub-wrapper > .ab-submenu::-webkit-scrollbar-thumb {
-    background: #8c8f94;
-    border: 2px solid #1d2327;
-    border-radius: 999px;
-}
-
-#wpadminbar #wp-admin-bar-etch-central li.menupop > .ab-sub-wrapper > .etch-central-menu-search-shell {
-    flex: 0 0 auto;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 0.45em;
-    background: #1d2327;
-}
-
-#wpadminbar #wp-admin-bar-etch-central li.menupop > .ab-sub-wrapper > .etch-central-menu-search-shell .etch-central-menu-search {
-    display: block;
-    width: 100%;
-}
-
-#wpadminbar #wp-admin-bar-etch-central li.menupop > .ab-sub-wrapper > .etch-central-menu-search-shell .etch-central-menu-search__input {
-    box-sizing: border-box;
-    width: 100%;
-    min-height: 2rem;
-    padding: 0.25rem 0.5rem;
-    color: #fff;
-    background: black;
-    border: 1px solid #8c8f94;
-    border-radius: 0.25rem;
-    font-size: 13px;
-    line-height: 1.4;
-}
-
-a.ab-item:has(.etch-central-pattern-menu-item) {
-    height: unset !important;
-}
-
-#wpadminbar #wp-admin-bar-etch-central li.menupop > .ab-sub-wrapper > .etch-central-menu-search-shell .etch-central-menu-search__input::placeholder {
-    color: #c3c4c7;
-    opacity: 1;
-}
-
-#wpadminbar #wp-admin-bar-etch-central li.menupop > .ab-sub-wrapper > .etch-central-menu-search-shell .etch-central-menu-search__input:focus {
-    border-color: #72aee6;
-    outline: 2px solid transparent;
-    box-shadow: 0 0 0 2px #2271b1;
-}
-
-#wpadminbar #wp-admin-bar-etch-central .etch-central-pattern-menu-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.25em;
-    line-height: 1.1;
-    width: 100%;
-}
-
-#wpadminbar #wp-admin-bar-etch-central .etch-central-pattern-menu-item__title {
-    flex: 1 1 auto;
-    min-width: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    line-height: 1.2 !important;
-}
-
-#wp-admin-bar-etch-central-all-patterns-default {
-    display: flex;
-    flex-direction: column;
-    gap: .75em;
-    padding-block-end: 1rem !important;
-    padding-block-start: 0 !important;
-}
-
-#wp-admin-bar-etch-central-all-templates-default {
-    padding-block-start: 0 !important;
-}
-
-#wpadminbar #wp-admin-bar-etch-central .etch-central-pattern-menu-item__status {
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    inline-size: 1.5em;
-    block-size: 1.5em;
-    border: 1px solid currentColor;
-    border-radius: 0.25em;
-    font-size: 0.75em;
-    font-weight: 700;
-    line-height: 1;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
-
-/* Click-controlled Etch Central child panels. Let JS control open state; ignore WP hover-only state. */
-#wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper > .ab-submenu > li.menupop > .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper > #wp-admin-bar-etch-central-default > li.menupop > .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper > .ab-submenu > li.menupop.hover:not(.etch-central-submenu-open) > .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper > #wp-admin-bar-etch-central-default > li.menupop.hover:not(.etch-central-submenu-open) > .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper > .ab-submenu > li.menupop:hover:not(.etch-central-submenu-open) > .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper > #wp-admin-bar-etch-central-default > li.menupop:hover:not(.etch-central-submenu-open) > .ab-sub-wrapper {
+#wpadminbar #wp-admin-bar-etch-central:not(.etch-central-panel-open) > .ab-sub-wrapper {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
 }
 
-#wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper > .ab-submenu > li.menupop.etch-central-submenu-open > .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper > #wp-admin-bar-etch-central-default > li.menupop.etch-central-submenu-open > .ab-sub-wrapper {
+#wpadminbar #wp-admin-bar-etch-central.etch-central-panel-open > .ab-sub-wrapper {
+    display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
     pointer-events: auto !important;
-    position: fixed !important;
-    inset: auto !important;
-    inset-inline-start: auto !important;
-    inset-block-start: auto !important;
-    margin: 0 !important;
-    transform: none !important;
-    z-index: 999999999;
 }
 
-#wpadminbar #wp-admin-bar-etch-central-all-templates.etch-central-submenu-open > .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central-all-patterns.etch-central-submenu-open > .ab-sub-wrapper {
-    display: flex !important;
+#wpadminbar #wp-admin-bar-etch-central-panel,
+#wpadminbar #wp-admin-bar-etch-central-panel > .ab-item {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    line-height: 1.4 !important;
+    background: transparent !important;
+    cursor: default;
+    white-space: normal !important;
+}
+
+#wpadminbar #wp-admin-bar-etch-central-panel > .ab-item:hover,
+#wpadminbar #wp-admin-bar-etch-central-panel > .ab-item:focus {
+    background: transparent !important;
+    color: inherit !important;
+}
+
+#wpadminbar .etch-central-panel {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: clamp(16rem, 28vw, 19rem) clamp(28rem, 46vw, 40rem);
+    inline-size: max-content;
+    max-inline-size: calc(100vw - 1rem);
+    max-block-size: min(72svh, 44rem);
+    overflow: hidden;
+    color: #f0f0f1;
+}
+
+#wpadminbar .etch-central-panel * {
+    box-sizing: border-box;
+}
+
+/*
+ * Isolate the launcher UI from theme/framework layout systems.
+ * Tools such as Automatic CSS may apply page-layout spacing to section
+ * elements, which creates large gaps inside the command center.
+ */
+#wpadminbar .etch-central-panel section,
+#wpadminbar .etch-central-panel ul,
+#wpadminbar .etch-central-panel li,
+#wpadminbar .etch-central-panel h2,
+#wpadminbar .etch-central-panel h3,
+#wpadminbar .etch-central-panel p {
+    margin: 0;
+}
+
+#wpadminbar .etch-central-panel__pane,
+#wpadminbar .etch-central-panel__section {
+    gap: 0 !important;
+}
+
+#wpadminbar .etch-central-panel__nav,
+#wpadminbar .etch-central-panel__content {
+    min-inline-size: 0;
+    block-size: min(72svh, 44rem);
+    max-block-size: min(72svh, 44rem);
+    overflow: hidden;
+    scrollbar-color: #8c8f94 #1d2327;
+    scrollbar-width: thin;
+}
+
+#wpadminbar .etch-central-panel__nav {
+    padding: 0.75rem;
+    border-inline-end: 1px solid rgba(255, 255, 255, 0.16);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#wpadminbar .etch-central-panel__content {
+    padding: 0.85rem 1rem;
+}
+
+#wpadminbar .etch-central-panel__pane {
+    block-size: 100%;
+    min-block-size: 0;
+    overflow: hidden;
+}
+
+#wpadminbar .etch-central-panel__pane.is-active {
+    display: flex;
     flex-direction: column;
-    max-block-size: 50svh;
-    overflow: hidden !important;
 }
 
-#wpadminbar #wp-admin-bar-etch-central-resources.etch-central-submenu-open > .ab-sub-wrapper,
-#wpadminbar #wp-admin-bar-etch-central-community.etch-central-submenu-open > .ab-sub-wrapper {
-    display: block !important;
+#wpadminbar .etch-central-panel__section + .etch-central-panel__section {
+    margin-block-start: 0.75rem;
+    padding-block-start: 0.75rem;
+    border-block-start: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-#wpadminbar #wp-admin-bar-etch-central-all-templates.etch-central-submenu-open > .ab-sub-wrapper > .ab-submenu,
-#wpadminbar #wp-admin-bar-etch-central-all-patterns.etch-central-submenu-open > .ab-sub-wrapper > .ab-submenu {
+#wpadminbar .etch-central-panel__heading {
+    margin: 0 0 0.45rem !important;
+    padding: 0 !important;
+    color: #c3c4c7;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+#wpadminbar .etch-central-panel__pane-heading {
+    margin: 0 0 0.65rem !important;
+    padding: 0 !important;
+    color: #fff;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+}
+
+#wpadminbar .etch-central-panel__list {
+    display: grid;
+    gap: 0.12rem;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+#wpadminbar .etch-central-panel__list--scroll {
     flex: 1 1 auto;
     min-block-size: 0;
     max-block-size: none;
     overflow-y: auto;
     overflow-x: hidden;
+    padding-inline-end: 0.25rem !important;
+    scrollbar-color: #8c8f94 #1d2327;
+    scrollbar-width: thin;
 }
 
-#wpadminbar #wp-admin-bar-etch-central .etch-central-click-submenu > .ab-item {
+#wpadminbar .etch-central-panel__item {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+#wpadminbar .etch-central-panel__item[hidden],
+#wpadminbar .etch-central-panel__pane[hidden] {
+    display: none !important;
+}
+
+#wpadminbar .etch-central-panel__link {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-block-size: 1.85rem !important;
+    height: auto !important;
+    padding: 0.32rem 0.5rem !important;
+    color: #f0f0f1 !important;
+    border-radius: 0.25rem;
+    text-decoration: none !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+}
+
+#wpadminbar .etch-central-panel__link:hover,
+#wpadminbar .etch-central-panel__link:focus {
+    background: #2271b1 !important;
+    color: #fff !important;
+    outline: none;
+}
+
+#wpadminbar .etch-central-panel__nav-buttons {
+    display: grid;
+    gap: 0.35rem;
+}
+
+#wpadminbar .etch-central-panel__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-block-size: 2.05rem;
+    padding: 0.38rem 0.55rem;
+    color: #f0f0f1;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 0.35rem;
     cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: left;
 }
-#wpadminbar #wp-admin-bar-etch-central-settings {
 
-    border-top: 1px solid rgba(255, 255, 255, 0.35);
-    	padding-block:.15em!important;
-	margin-block-start:.25em!important;
+#wpadminbar .etch-central-panel__button:hover,
+#wpadminbar .etch-central-panel__button:focus,
+#wpadminbar .etch-central-panel__button.is-active {
+    background: #2271b1;
+    border-color: #72aee6;
+    color: #fff;
+}
+
+#wpadminbar .etch-central-panel__link:focus-visible,
+#wpadminbar .etch-central-panel__button:focus-visible,
+#wpadminbar .etch-central-browser__input:focus-visible {
+    outline: 2px solid #72aee6;
+    outline-offset: 2px;
+}
+
+#wpadminbar .etch-central-panel__empty {
+    padding: 0.45rem 0.5rem !important;
+    color: #c3c4c7;
+    font-style: italic;
+}
+
+#wpadminbar .etch-central-browser__search {
+    display: block;
+    margin-block-end: 0.65rem;
+    padding-inline: 8px !important;
+}
+
+#wpadminbar .etch-central-browser__input {
+    display: block;
+    width: 100%;
+    min-height: 2.15rem;
+    margin: 0 !important;
+    padding: 0.38rem 0.55rem !important;
+    color: #f0f0f1 !important;
+    background: #111518 !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 0.25rem !important;
+    font: inherit !important;
+    line-height: 1.3 !important;
+}
+
+#wpadminbar .etch-central-browser__input::placeholder {
+    color: #a7aaad;
+}
+
+#wpadminbar .etch-central-panel__badge {
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    min-inline-size: 1.35rem;
+    min-block-size: 1.35rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    color: currentColor;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+@media screen and (max-width: 1100px) {
+    #wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper {
+        position: fixed !important;
+        inset-block-start: var(--wp-admin--admin-bar--height, 32px) !important;
+        inset-inline-start: auto !important;
+        inset-inline-end: 0.5rem !important;
+        max-width: calc(100vw - 1rem) !important;
+    }
+
+    #wpadminbar .etch-central-panel {
+        grid-template-columns: minmax(15rem, 34vw) minmax(24rem, 1fr);
+        inline-size: calc(100vw - 1rem);
+    }
+
+    #wpadminbar .etch-central-panel__content {
+        padding-inline: 0.85rem;
+    }
+}
+
+@media screen and (max-width: 782px) {
+    #wpadminbar #wp-admin-bar-etch-central > .ab-sub-wrapper {
+        position: fixed !important;
+        inset-inline: 0.5rem !important;
+        inset-block-start: 46px !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: calc(100vw - 1rem) !important;
+    }
+
+    #wpadminbar .etch-central-panel {
+        display: block;
+        inline-size: auto;
+        max-block-size: calc(100svh - 58px);
+        overflow: hidden;
+    }
+
+    #wpadminbar .etch-central-panel__nav,
+    #wpadminbar .etch-central-panel__content {
+        block-size: auto;
+        max-block-size: calc((100svh - 58px) / 2);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    #wpadminbar .etch-central-panel__nav {
+        border-inline-end: 0;
+        border-block-end: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    #wpadminbar .etch-central-panel__list--scroll {
+        max-block-size: 18rem;
+    }
 }
