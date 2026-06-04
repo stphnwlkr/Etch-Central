@@ -128,7 +128,7 @@ final class Admin_Bar {
 
         $resource_buttons = '';
         if (!empty($settings['enabled_menus']['resources'])) {
-            $pane_id = 'etch-central-pane-resources';
+            $pane_id = 'etch-central-pane-etch-resources';
             $items   = [];
 
             foreach ($this->resource_links() as $link) {
@@ -319,7 +319,7 @@ final class Admin_Bar {
         );
 
         return sprintf(
-            '<section id="%s" class="etch-central-panel__pane%s" role="region" aria-label="%s"%s><h3 class="etch-central-panel__pane-heading">%s</h3><label class="etch-central-browser__search" for="%s-search"><span class="screen-reader-text">%s</span><input id="%s-search" class="etch-central-browser__input" type="search" autocomplete="off" placeholder="%s" data-etch-central-browser-search></label><ul class="etch-central-panel__list etch-central-panel__list--scroll" data-etch-central-browser-results>%s</ul></section>',
+            '<section id="%s" class="etch-central-panel__pane%s" role="region" aria-label="%s"%s><h3 class="etch-central-panel__pane-heading">%s</h3><label class="etch-central-browser__search" for="%s-search"><span class="screen-reader-text">%s</span><input id="%s-search" class="etch-central-browser__input" type="search" autocomplete="off" placeholder="%s" data-etch-central-browser-search></label><ul class="etch-central-panel__list etch-central-panel__list--links" data-etch-central-browser-results>%s</ul></section>',
             esc_attr($id),
             $active ? ' is-active' : '',
             esc_attr($heading),

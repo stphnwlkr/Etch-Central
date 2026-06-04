@@ -2,6 +2,15 @@
 
 All notable Etch Central changes are documented here, including the iteration history that led to the stable 1.0.0 launcher.
 
+
+## 1.0.1
+
+### Fixed
+
+- Fixed a pane ID collision where a custom post type named `resources` could populate the Etch Resources panel.
+- Kept Etch Resources limited to the four static Etch links.
+- Adjusted static link-list sizing so Etch Resources and My Etch Shortcuts no longer stretch awkwardly to fill the available vertical space.
+
 ## 1.0.0
 
 ### Changed

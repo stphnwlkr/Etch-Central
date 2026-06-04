@@ -162,6 +162,18 @@
     scrollbar-width: thin;
 }
 
+
+#wpadminbar .etch-central-panel__list--links {
+    flex: 0 1 auto;
+    min-block-size: 0;
+    max-block-size: 24rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-inline-end: 0.25rem !important;
+    scrollbar-color: #8c8f94 #1d2327;
+    scrollbar-width: thin;
+}
+
 #wpadminbar .etch-central-panel__item {
     margin: 0 !important;
     padding: 0 !important;
