@@ -145,14 +145,13 @@
 
 #wpadminbar .etch-central-panel__list {
     display: grid;
-    gap: 0.12rem;
+    gap:0;
     margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
 }
 
 #wpadminbar .etch-central-panel__list--scroll {
-    flex: 1 1 auto;
     min-block-size: 0;
     max-block-size: none;
     overflow-y: auto;
@@ -190,8 +189,6 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    min-block-size: 1.85rem !important;
-    height: auto !important;
     padding: 0.32rem 0.5rem !important;
     color: #f0f0f1 !important;
     border-radius: 0.25rem;
