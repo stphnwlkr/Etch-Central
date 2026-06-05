@@ -126,12 +126,32 @@ final class Admin_Bar {
             $left_sections[] = $this->render_left_button_section(__('Etch Assets', 'etch-central'), $asset_buttons);
         }
 
+        if (!empty($settings['enabled_menus']['integrations']) && !empty($settings['show_detected_tools'])) {
+            $detected_integrations = $this->integration_browser_data((array) ($settings['detected_tools_enabled'] ?? []));
+            if ($detected_integrations) {
+                $integration_buttons = '';
+
+                foreach ($detected_integrations as $browser) {
+                    if ('' === $active_id) {
+                        $active_id = $browser['id'];
+                    }
+
+                    $integration_buttons .= $this->render_left_panel_button($browser['id'], $browser['label'], $browser['id'] === $active_id);
+                    $panes[]             = $this->render_link_pane($browser['id'], $browser['heading'], $browser['items'], $browser['id'] === $active_id);
+                }
+
+                if ('' !== $integration_buttons) {
+                    $left_sections[] = $this->render_left_button_section(__('Detected Tools', 'etch-central'), $integration_buttons);
+                }
+            }
+        }
+
         $resource_buttons = '';
         if (!empty($settings['enabled_menus']['resources'])) {
             $pane_id = 'etch-central-pane-etch-resources';
             $items   = [];
 
-            foreach ($this->resource_links() as $link) {
+            foreach ((array) ($settings['resource_links'] ?? $this->resource_links()) as $link) {
                 $items[] = [
                     'label'  => (string) $link['label'],
                     'url'    => (string) $link['url'],
@@ -149,11 +169,11 @@ final class Admin_Bar {
             }
         }
 
-        if (!empty($settings['enabled_menus']['community'])) {
+        if (!empty($settings['enabled_menus']['shortcuts']) || !empty($settings['enabled_menus']['community'])) {
             $pane_id = 'etch-central-pane-shortcuts';
             $items   = [];
 
-            foreach ((array) $settings['community_links'] as $link) {
+            foreach ((array) ($settings['shortcut_links'] ?? $settings['community_links'] ?? []) as $link) {
                 if (empty($link['label']) || empty($link['url'])) {
                     continue;
                 }
@@ -170,8 +190,8 @@ final class Admin_Bar {
                     $active_id = $pane_id;
                 }
 
-                $resource_buttons .= $this->render_left_panel_button($pane_id, __('My Etch Shortcuts', 'etch-central'), $pane_id === $active_id);
-                $panes[]          = $this->render_link_pane($pane_id, __('My Etch Shortcuts', 'etch-central'), $items, $pane_id === $active_id);
+                $resource_buttons .= $this->render_left_panel_button($pane_id, __('Quick Links', 'etch-central'), $pane_id === $active_id);
+                $panes[]          = $this->render_link_pane($pane_id, __('Quick Links', 'etch-central'), $items, $pane_id === $active_id);
             }
         }
 
@@ -184,7 +204,7 @@ final class Admin_Bar {
             [
                 [
                     'label' => __('Etch Central Settings', 'etch-central'),
-                    'url'   => admin_url('options-general.php?page=etch-central'),
+                    'url'   => admin_url('admin.php?page=etch-central'),
                 ],
             ]
         );
@@ -312,24 +332,24 @@ final class Admin_Bar {
             $links = '<li class="etch-central-panel__item etch-central-panel__empty">' . esc_html__('No links found', 'etch-central') . '</li>';
         }
 
-        $search_label = sprintf(
-            /* translators: %s: panel heading. */
-            __('Search %s', 'etch-central'),
-            strtolower($heading)
-        );
-
         return sprintf(
-            '<section id="%s" class="etch-central-panel__pane%s" role="region" aria-label="%s"%s><h3 class="etch-central-panel__pane-heading">%s</h3><label class="etch-central-browser__search" for="%s-search"><span class="screen-reader-text">%s</span><input id="%s-search" class="etch-central-browser__input" type="search" autocomplete="off" placeholder="%s" data-etch-central-browser-search></label><ul class="etch-central-panel__list etch-central-panel__list--links" data-etch-central-browser-results>%s</ul></section>',
+            '<section id="%s" class="etch-central-panel__pane%s" role="region" aria-label="%s"%s><h3 class="etch-central-panel__pane-heading">%s</h3><ul class="etch-central-panel__list etch-central-panel__list--links">%s</ul></section>',
             esc_attr($id),
             $active ? ' is-active' : '',
             esc_attr($heading),
             $active ? '' : ' hidden',
             esc_html($heading),
-            esc_attr($id),
-            esc_html($search_label),
-            esc_attr($id),
-            esc_attr($search_label),
             $links
+        );
+    }
+
+    private function render_action_link(string $label, string $aria_label, string $url): string {
+        return sprintf(
+            '<a class="etch-central-browser__action" href="%s" aria-label="%s" title="%s">%s</a>',
+            esc_url($url),
+            esc_attr($aria_label),
+            esc_attr($aria_label),
+            esc_html($label)
         );
     }
 
@@ -362,19 +382,21 @@ final class Admin_Bar {
         }
 
         $count           = wp_count_posts($post_type);
-        $published_count = isset($count->publish) ? (int) $count->publish : 0;
+        $published_count = 'attachment' === $post_type && isset($count->inherit) ? (int) $count->inherit : (isset($count->publish) ? (int) $count->publish : 0);
         $browser_id      = 'etch-central-pane-' . sanitize_key($post_type);
 
         $posts = get_posts([
             'post_type'      => $post_type,
             'posts_per_page' => 200,
-            'post_status'    => 'publish',
+            'post_status'    => 'attachment' === $post_type ? 'inherit' : 'publish',
             'orderby'        => 'title',
             'order'          => 'ASC',
             'no_found_rows'  => true,
         ]);
 
-        $items = '';
+        $actions = $this->post_type_action_links($post_type, $post_type_object);
+        $items   = '';
+
         foreach ($posts as $post) {
             if (!$post instanceof WP_Post) {
                 continue;
@@ -401,8 +423,81 @@ final class Admin_Bar {
                 __('Search %s', 'etch-central'),
                 strtolower((string) $post_type_object->labels->name)
             ),
+            'actions'      => $actions,
             'items'        => $items,
         ];
+    }
+
+
+    private function post_type_action_links(string $post_type, object $post_type_object): string {
+        $links = '';
+        $label = (string) $post_type_object->labels->name;
+
+        if (current_user_can('edit_others_posts')) {
+            $links .= $this->render_action_link(__('All', 'etch-central'), sprintf(__('All %s', 'etch-central'), $label), $this->all_items_url($post_type));
+            $links .= $this->render_action_link(__('Mine', 'etch-central'), sprintf(__('My %s', 'etch-central'), $label), $this->my_items_url($post_type));
+        } else {
+            $links .= $this->render_action_link(__('Mine', 'etch-central'), sprintf(__('My %s', 'etch-central'), $label), $this->my_items_url($post_type));
+        }
+
+        if ($this->can_create_post_type($post_type_object)) {
+            $links .= $this->render_action_link(__('New', 'etch-central'), $this->add_new_label($post_type, $label), $this->add_new_url($post_type));
+        }
+
+        return $links;
+    }
+
+    private function all_items_url(string $post_type): string {
+        if ('post' === $post_type) {
+            return admin_url('edit.php');
+        }
+
+        if ('attachment' === $post_type) {
+            return admin_url('upload.php');
+        }
+
+        return admin_url('edit.php?post_type=' . $post_type);
+    }
+
+    private function my_items_url(string $post_type): string {
+        if ('post' === $post_type) {
+            return admin_url('edit.php?author=' . get_current_user_id());
+        }
+
+        if ('attachment' === $post_type) {
+            return admin_url('upload.php?author=' . get_current_user_id());
+        }
+
+        return admin_url('edit.php?post_type=' . $post_type . '&author=' . get_current_user_id());
+    }
+
+    private function add_new_url(string $post_type): string {
+        if ('post' === $post_type) {
+            return admin_url('post-new.php');
+        }
+
+        if ('attachment' === $post_type) {
+            return admin_url('media-new.php');
+        }
+
+        return admin_url('post-new.php?post_type=' . $post_type);
+    }
+
+    private function can_create_post_type(object $post_type_object): bool {
+        if ('attachment' === $post_type_object->name) {
+            return current_user_can('upload_files');
+        }
+
+        $capability = $post_type_object->cap->create_posts ?? 'edit_posts';
+
+        return current_user_can($capability);
+    }
+
+    private function add_new_label(string $post_type, string $plural_label): string {
+        return match ($post_type) {
+            'attachment' => __('Add New Media', 'etch-central'),
+            default      => sprintf(__('Add New %s', 'etch-central'), $plural_label),
+        };
     }
 
     private function templates_browser_data(): array {
@@ -483,8 +578,12 @@ final class Admin_Bar {
     }
 
     private function render_browser_pane(array $browser, bool $active = false): string {
+        $actions = !empty($browser['actions'])
+            ? '<div class="etch-central-browser__actions" aria-label="' . esc_attr__('Post type actions', 'etch-central') . '">' . (string) $browser['actions'] . '</div>'
+            : '';
+
         return sprintf(
-            '<section id="%s" class="etch-central-panel__pane%s" role="region" aria-label="%s"%s><h3 class="etch-central-panel__pane-heading">%s</h3><label class="etch-central-browser__search" for="%s-search"><span class="screen-reader-text">%s</span><input id="%s-search" class="etch-central-browser__input" type="search" autocomplete="off" placeholder="%s" data-etch-central-browser-search></label><ul class="etch-central-panel__list etch-central-panel__list--scroll" data-etch-central-browser-results>%s</ul></section>',
+            '<section id="%s" class="etch-central-panel__pane%s" role="region" aria-label="%s"%s><h3 class="etch-central-panel__pane-heading">%s</h3><div class="etch-central-browser__sticky"><label class="etch-central-browser__search" for="%s-search"><span class="screen-reader-text">%s</span><input id="%s-search" class="etch-central-browser__input" type="search" autocomplete="off" placeholder="%s" data-etch-central-browser-search></label>%s</div><ul class="etch-central-panel__list etch-central-panel__list--scroll" data-etch-central-browser-results>%s</ul></section>',
             esc_attr((string) $browser['id']),
             $active ? ' is-active' : '',
             esc_attr((string) $browser['heading']),
@@ -494,6 +593,7 @@ final class Admin_Bar {
             esc_html((string) $browser['search_label']),
             esc_attr((string) $browser['id']),
             esc_attr((string) $browser['search_label']),
+            $actions,
             (string) $browser['items']
         );
     }
@@ -648,6 +748,117 @@ final class Admin_Bar {
         }
 
         return __('S', 'etch-central');
+    }
+
+    private function integration_browser_data(array $enabled_tools = []): array {
+        $items = [];
+
+        if (!empty($enabled_tools['acf']) && $this->is_tool_active(['advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php'], ['ACF', 'ACF\ACF', 'acf_plugin'], ['acf', 'acf_get_field_groups'], ['ACF_VERSION'])) {
+            $items[] = [
+                'id'      => 'etch-central-pane-acf',
+                'label'   => 'ACF',
+                'heading' => 'Advanced Custom Fields',
+                'items'   => [
+                    ['label' => __('Field Groups', 'etch-central'), 'url' => admin_url('edit.php?post_type=acf-field-group')],
+                    ['label' => __('Post Types', 'etch-central'), 'url' => admin_url('edit.php?post_type=acf-post-type')],
+                    ['label' => __('Taxonomies', 'etch-central'), 'url' => admin_url('edit.php?post_type=acf-taxonomy')],
+                    ['label' => __('Options Pages', 'etch-central'), 'url' => admin_url('edit.php?post_type=acf-ui-options-page')],
+                ],
+            ];
+        }
+
+        if (!empty($enabled_tools['metabox']) && $this->is_tool_active(['meta-box/meta-box.php', 'meta-box-aio/meta-box-aio.php', 'meta-box-aio/meta-box-aio.php'], ['RWMB_Loader', 'RWMB_Core'], ['rwmb_meta'], ['RWMB_VER'])) {
+            $items[] = [
+                'id'      => 'etch-central-pane-metabox',
+                'label'   => 'Meta Box',
+                'heading' => 'Meta Box',
+                'items'   => [
+                    ['label' => __('Custom Fields', 'etch-central'), 'url' => admin_url('edit.php?post_type=meta-box')],
+                    ['label' => __('Post Types', 'etch-central'), 'url' => admin_url('edit.php?post_type=mb-post-type')],
+                    ['label' => __('Taxonomies', 'etch-central'), 'url' => admin_url('edit.php?post_type=mb-taxonomy')],
+                    ['label' => __('Settings Pages', 'etch-central'), 'url' => admin_url('edit.php?post_type=mb-settings-page')],
+                    ['label' => __('Relationships', 'etch-central'), 'url' => admin_url('edit.php?post_type=mb-relationship')],
+                ],
+            ];
+        }
+
+        if (!empty($enabled_tools['acpt']) && $this->is_tool_active(['advanced-custom-post-type/acpt.php', 'acpt/acpt.php'], ['ACPT_Loader', 'ACPT\Core\Plugin'], [], ['ACPT_PLUGIN_VERSION'])) {
+            $items[] = [
+                'id'      => 'etch-central-pane-acpt',
+                'label'   => 'ACPT',
+                'heading' => 'ACPT',
+                'items'   => [
+                    ['label' => __('Dashboard', 'etch-central'), 'url' => admin_url('admin.php?page=acpt')],
+                    ['label' => __('Post Types', 'etch-central'), 'url' => admin_url('admin.php?page=acpt_cpt')],
+                    ['label' => __('Taxonomies', 'etch-central'), 'url' => admin_url('admin.php?page=acpt_tax')],
+                    ['label' => __('Meta Fields', 'etch-central'), 'url' => admin_url('admin.php?page=acpt_meta')],
+                ],
+            ];
+        }
+
+        if (!empty($enabled_tools['jetengine']) && $this->is_tool_active(['jet-engine/jet-engine.php'], ['Jet_Engine'], [], ['JET_ENGINE_VERSION'])) {
+            $items[] = [
+                'id'      => 'etch-central-pane-jetengine',
+                'label'   => 'JetEngine',
+                'heading' => 'JetEngine',
+                'items'   => [
+                    ['label' => __('Dashboard', 'etch-central'), 'url' => admin_url('admin.php?page=jet-engine')],
+                    ['label' => __('Post Types', 'etch-central'), 'url' => admin_url('admin.php?page=jet-engine-cpt')],
+                    ['label' => __('Taxonomies', 'etch-central'), 'url' => admin_url('admin.php?page=jet-engine-tax')],
+                    ['label' => __('Meta Boxes', 'etch-central'), 'url' => admin_url('admin.php?page=jet-engine-meta-boxes')],
+                    ['label' => __('Relations', 'etch-central'), 'url' => admin_url('admin.php?page=jet-engine-relations')],
+                ],
+            ];
+        }
+
+        if (!empty($enabled_tools['wpcodebox']) && $this->is_tool_active(['wpcodebox/wpcodebox.php', 'wpcodebox2/wpcodebox.php', 'wpcodebox2/wpcodebox2.php', 'wpcodebox/wpcodebox2.php'], ['WPCodeBox', 'Wpcb\Plugin', 'WPCodeBox2\Plugin'], [], ['WPCB_VERSION', 'WPCB2_VERSION'])) {
+            $items[] = [
+                'id'      => 'etch-central-pane-wpcodebox',
+                'label'   => 'WPCodeBox',
+                'heading' => 'WPCodeBox',
+                'items'   => [
+                    ['label' => __('Code Snippets', 'etch-central'), 'url' => admin_url('admin.php?page=wpcodebox2')],
+                ],
+            ];
+        }
+
+        return $items;
+    }
+
+    private function is_tool_active(array $plugin_files, array $classes = [], array $functions = [], array $constants = []): bool {
+        foreach ($classes as $class) {
+            if (class_exists($class)) {
+                return true;
+            }
+        }
+
+        foreach ($functions as $function) {
+            if (function_exists($function)) {
+                return true;
+            }
+        }
+
+        foreach ($constants as $constant) {
+            if (defined($constant)) {
+                return true;
+            }
+        }
+
+        $active_plugins = (array) get_option('active_plugins', []);
+
+        if (is_multisite()) {
+            $active_plugins = array_merge($active_plugins, array_keys((array) get_site_option('active_sitewide_plugins', [])));
+        }
+
+        foreach ($active_plugins as $active_plugin) {
+            foreach ($plugin_files as $plugin_file) {
+                if ($active_plugin === $plugin_file || str_contains((string) $active_plugin, trim($plugin_file, '/'))) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private function resource_links(): array {

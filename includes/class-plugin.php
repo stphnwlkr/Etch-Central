@@ -38,9 +38,14 @@ final class Plugin {
     public function init(): void {
         add_action('admin_init', [$this->settings, 'register']);
         add_action('admin_menu', [$this->admin_page, 'register']);
+        add_action('admin_menu', [$this->settings, 'maybe_remove_posts_menu_page'], 999);
+        add_action('admin_init', [$this->settings, 'maybe_block_default_posts_admin_screens'], 999);
         add_action('admin_enqueue_scripts', [$this->assets, 'enqueue_admin_assets']);
         add_action('admin_enqueue_scripts', [$this->assets, 'enqueue_admin_bar_assets']);
         add_action('wp_enqueue_scripts', [$this->assets, 'enqueue_admin_bar_assets']);
+        add_action('admin_bar_menu', [$this->settings, 'maybe_hide_wp_new_menu'], 999);
+        add_action('wp_before_admin_bar_render', [$this->settings, 'maybe_hide_wp_new_menu_frontend'], 999);
         add_action('admin_bar_menu', [$this->admin_bar, 'register'], 9999);
+        add_action('wp_ajax_etch_central_save_appearance', [$this->admin_page, 'ajax_save_appearance']);
     }
 }
