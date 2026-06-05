@@ -59,7 +59,7 @@
     max-inline-size: calc(100vw - 1rem);
     max-block-size: min(72svh, 44rem);
     overflow: hidden;
-    color: #f0f0f1;
+    color: #c7c8ca;
 }
 
 #wpadminbar .etch-central-panel * {
@@ -137,7 +137,7 @@
 #wpadminbar .etch-central-panel__pane-heading {
     margin: 0 0 0.65rem !important;
     padding: 0 !important;
-    color: #fff;
+    color: #f6f7f7;
     font-size: 1rem !important;
     font-weight: 700 !important;
     line-height: 1.25 !important;
@@ -173,6 +173,13 @@
     scrollbar-width: thin;
 }
 
+#wpadminbar .etch-central-panel__divider {
+    display: block;
+    margin: 0.35rem 0;
+    block-size: 1px;
+    background: rgba(255, 255, 255, 0.14);
+}
+
 #wpadminbar .etch-central-panel__item {
     margin: 0 !important;
     padding: 0 !important;
@@ -190,7 +197,7 @@
     justify-content: space-between;
     gap: 0.5rem;
     padding: 0.32rem 0.5rem !important;
-    color: #f0f0f1 !important;
+    color: #c7c8ca !important;
     border-radius: 0.25rem;
     text-decoration: none !important;
     line-height: 1.25 !important;
@@ -237,7 +244,8 @@
 
 #wpadminbar .etch-central-panel__link:focus-visible,
 #wpadminbar .etch-central-panel__button:focus-visible,
-#wpadminbar .etch-central-browser__input:focus-visible {
+#wpadminbar .etch-central-browser__input:focus-visible,
+#wpadminbar .etch-central-browser__action:focus-visible {
     outline: 2px solid #72aee6;
     outline-offset: 2px;
 }
@@ -248,10 +256,57 @@
     font-style: italic;
 }
 
+#wpadminbar .etch-central-browser__sticky {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+    display: grid;
+    gap: 0.55rem;
+    margin-block-end: 0.65rem;
+    padding-block-end: 0.65rem;
+    background: #1d2327;
+}
+
 #wpadminbar .etch-central-browser__search {
     display: block;
-    margin-block-end: 0.65rem;
     padding-inline: 8px !important;
+}
+
+
+#wpadminbar .etch-central-browser__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    inline-size: max-content;
+    max-inline-size: 100%;
+    margin-inline: 8px;
+    padding: 0.22rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(11, 15, 20, 0.64);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+#wpadminbar .etch-central-browser__action {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 1.65rem;
+    padding: 0.2rem 0.72rem !important;
+    border-radius: 999px;
+    color: #c7c8ca !important;
+    font: inherit !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+#wpadminbar .etch-central-browser__action:hover,
+#wpadminbar .etch-central-browser__action:focus {
+    background: #2271b1 !important;
+    color: #fff !important;
+    outline: none;
 }
 
 #wpadminbar .etch-central-browser__input {
@@ -260,7 +315,7 @@
     min-height: 2.15rem;
     margin: 0 !important;
     padding: 0.38rem 0.55rem !important;
-    color: #f0f0f1 !important;
+    color: #c7c8ca !important;
     background: #111518 !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 0.25rem !important;
