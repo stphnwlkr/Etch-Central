@@ -1,205 +1,387 @@
 .etch-central-admin {
-    --etch-central-surface: #ffffff;
-    --etch-central-border: #dcdcde;
-    --etch-central-text: #1d2327;
-    --etch-central-muted: #50575e;
-    --etch-central-accent: #2271b1;
-    max-inline-size: 1120px;
+    --ec-bg: #f5f7fb;
+    --ec-sidebar: #ffffff;
+    --ec-surface: #ffffff;
+    --ec-surface-2: #f8fafc;
+    --ec-border: rgb(15 23 42 / 0.1);
+    --ec-text: #0f172a;
+    --ec-muted: #64748b;
+    --ec-faint: #94a3b8;
+    --ec-accent: #2563eb;
+    --ec-accent-2: #06b6d4;
+    --ec-success: #16a34a;
+    --ec-warning: #f59e0b;
+    --ec-shadow: 0 1rem 2.25rem rgb(15 23 42 / 0.08);
+    --ec-radius: 18px;
+    max-inline-size: 1480px;
+    margin-block-start: 1rem;
+    color: var(--ec-text);
 }
 
-.etch-central-admin__hero {
+.etch-central-admin--dark {
+    --ec-bg: #070d18;
+    --ec-sidebar: #081827;
+    --ec-surface: #101827;
+    --ec-surface-2: #151f31;
+    --ec-border: rgb(148 163 184 / 0.16);
+    --ec-text: #c7c8ca;
+    --ec-muted: #a8b3c7;
+    --ec-faint: #667085;
+    --ec-accent: #3b82f6;
+    --ec-accent-2: #22d3ee;
+    --ec-success: #22c55e;
+    --ec-warning: #f59e0b;
+    --ec-shadow: 0 1.5rem 3rem rgb(0 0 0 / 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+    .etch-central-admin--auto {
+        --ec-bg: #070d18;
+        --ec-sidebar: #081827;
+        --ec-surface: #101827;
+        --ec-surface-2: #151f31;
+        --ec-border: rgb(148 163 184 / 0.16);
+        --ec-text: #c7c8ca;
+        --ec-muted: #a8b3c7;
+        --ec-faint: #667085;
+        --ec-accent: #3b82f6;
+        --ec-accent-2: #22d3ee;
+        --ec-success: #22c55e;
+        --ec-warning: #f59e0b;
+        --ec-shadow: 0 1.5rem 3rem rgb(0 0 0 / 0.35);
+    }
+}
+
+.etch-central-admin * { box-sizing: border-box; }
+
+.etch-central-admin::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 8% 2%, color-mix(in srgb, var(--ec-accent-2) 18%, transparent), transparent 34rem),
+        radial-gradient(circle at 95% 18%, color-mix(in srgb, var(--ec-accent) 13%, transparent), transparent 30rem),
+        var(--ec-bg);
+}
+
+.etch-central-shell {
+    display: grid;
+    grid-template-columns: 17rem minmax(0, 1fr);
+    min-block-size: calc(100vh - 6rem);
+    overflow: hidden;
+    background: color-mix(in srgb, var(--ec-surface) 72%, transparent);
+    border: 1px solid var(--ec-border);
+    border-radius: 22px;
+    box-shadow: var(--ec-shadow);
+}
+
+.etch-central-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    color: var(--ec-text);
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--ec-sidebar) 92%, var(--ec-accent-2)), var(--ec-sidebar));
+    border-inline-end: 1px solid var(--ec-border);
+}
+
+.etch-central-brand {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    min-block-size: 3rem;
+    padding-inline: .65rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.etch-central-brand__icon {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 1.6rem;
+    block-size: 1.6rem;
+    color: var(--ec-accent);
+}
+
+.etch-central-brand__icon svg { inline-size: 100%; block-size: 100%; display: block; }
+
+.etch-central-sidebar__nav { display: grid; gap: .55rem; }
+
+.etch-central-sidebar__nav a {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    min-block-size: 3rem;
+    padding-inline: .85rem;
+    color: var(--ec-muted);
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.etch-central-sidebar__nav a span {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 1.85rem;
+    block-size: 1.85rem;
+    color: var(--ec-accent);
+    background: color-mix(in srgb, var(--ec-accent) 12%, transparent);
+    border-radius: 9px;
+}
+
+.etch-central-sidebar__nav a:hover,
+.etch-central-sidebar__nav a:focus-visible,
+.etch-central-sidebar__nav a.is-active {
+    color: var(--ec-text);
+    background: color-mix(in srgb, var(--ec-accent) 12%, var(--ec-surface-2));
+    border-color: var(--ec-border);
+    outline: none;
+}
+
+.etch-central-sidebar__version {
+    margin-block-start: auto;
+    inline-size: fit-content;
+    min-inline-size: 10rem;
+    padding: .35rem .7rem;
+    color: var(--ec-muted);
+    background: color-mix(in srgb, var(--ec-surface-2) 80%, transparent);
+    border: 1px solid var(--ec-border);
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.etch-central-main {
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.etch-central-main__header {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    margin-block: 1.5rem;
-    padding: 1.5rem;
-    color: var(--etch-central-text);
-    background: var(--etch-central-surface);
-    border: 1px solid var(--etch-central-border);
-    border-radius: 16px;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
-}
-.etch-central-admin__hero-content{
-	display: flex;
-	flex-direction:column;
-}
-.etch-central-admin__title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-block: 0.15rem 0.5rem;
-    font-size: clamp(1.75rem, 2vw, 2.5rem)!important;
-    font-weight: 700!important;
-    line-height: 1.1!important;
+    align-items: start;
 }
 
-.etch-central-admin__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    inline-size: 1.25em;
-    block-size: 1.25em;
-    color: #1168cc;
-    flex: 0 0 auto;
+.etch-central-main__header h1 {
+    margin: .1rem 0 .35rem;
+    color: var(--ec-text);
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.05;
+    font-weight: 800;
 }
 
-.etch-central-admin__icon svg {
-    display: block;
-    inline-size: 100%;
-    block-size: 100%;
-}
-
-.etch-central-admin__cleanup {
-    display: grid;
-    gap: 0.25rem;
-    margin-block-start: 1rem;
-    padding-block-start: 1rem;
-    border-block-start: 1px solid var(--etch-central-border);
-}
-
-.etch-central-admin__cleanup .description {
-    margin: 0;
-    color: var(--etch-central-muted);
-}
-
-.etch-central-admin__hero p {
-    max-inline-size: 68ch;
-    margin: 0;
-    color: var(--etch-central-muted);
-    font-size: 1rem;
-}
-
-.etch-central-admin__eyebrow {
-    color: var(--etch-central-accent) !important;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-	order:-1;
-}
+.etch-central-main__header p { margin: 0; color: var(--ec-muted); }
+.etch-central-admin__eyebrow { color: var(--ec-accent-2) !important; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
 
 .etch-central-admin__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
 }
 
-.etch-central-card {
-    padding: 1.25rem;
-    background: var(--etch-central-surface);
-    border: 1px solid var(--etch-central-border);
-    border-radius: 16px;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+.etch-central-panel {
+    position: relative;
+    padding: 1rem;
+    overflow: hidden;
+    color: var(--ec-text);
+    background: color-mix(in srgb, var(--ec-surface) 92%, transparent);
+    border: 1px solid var(--ec-border);
+    border-radius: var(--ec-radius);
+    box-shadow: 0 .5rem 1.5rem rgb(15 23 42 / 0.04);
 }
 
-.etch-central-card--wide,
-.etch-central-admin__actions {
-    grid-column: 1 / -1;
+.etch-central-panel--wide,
+.etch-central-admin__actions { grid-column: 1 / -1; }
+
+.etch-central-panel::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ec-accent-2) 55%, transparent), transparent);
 }
 
-.etch-central-card h2 {
-    margin-block-start: 0;
-    font-size: 1.25rem;
+.etch-central-panel__header {
+    display: flex;
+    gap: .85rem;
+    align-items: flex-start;
+    margin-block-end: 1rem;
+    padding-block-end: 1rem;
+    border-block-end: 1px solid var(--ec-border);
 }
+
+.etch-central-panel__icon {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    inline-size: 2rem;
+    block-size: 2rem;
+    color: var(--ec-accent);
+    background: color-mix(in srgb, var(--ec-accent) 12%, transparent);
+    border: 1px solid var(--ec-border);
+    border-radius: 10px;
+}
+
+.etch-central-panel h2 { margin: 0 0 .2rem; color: var(--ec-text); font-size: 1.05rem; }
+.etch-central-panel p { margin: 0; color: var(--ec-muted); }
 
 .etch-central-toggle {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
-    min-block-size: 2.5rem;
-    font-weight: 600;
+    gap: .7rem;
+    min-block-size: 2.7rem;
+    color: var(--ec-text);
+    font-weight: 700;
 }
 
-.etch-central-toggle input {
-    inline-size: 1.25rem;
-    block-size: 1.25rem;
-}
-
-.etch-central-links {
-    display: grid;
-    gap: 1rem;
-}
-
-.etch-central-link-row {
-    display: grid;
-    grid-template-columns: minmax(12rem, 1fr) minmax(16rem, 2fr);
-    gap: 1rem;
-    align-items: end;
-}
-
-.etch-central-link-row label {
-    display: grid;
-    gap: 0.35rem;
-    font-weight: 600;
-}
-
-.etch-central-link-row input {
-    inline-size: 100%;
-    min-block-size: 2.5rem;
-}
-
-.etch-central-admin__actions .submit {
-    margin-block: 0.5rem 0;
-}
-
-@media (max-width: 782px) {
-    .etch-central-link-row {
-        grid-template-columns: 1fr;
-    }
-}
-
-.etch-central-link-row {
-    position: relative;
-    grid-template-columns: auto minmax(12rem, 1fr) minmax(16rem, 2fr);
-    padding: 0.75rem;
-    background: #f6f7f7;
-    border: 1px solid var(--etch-central-border);
+.etch-central-toggle--primary {
+    padding: .75rem;
+    margin-block-end: .85rem;
+    background: var(--ec-surface-2);
+    border: 1px solid var(--ec-border);
     border-radius: 12px;
 }
 
-.etch-central-link-row.is-dragging {
-    opacity: 0.55;
+.etch-central-toggle input,
+.etch-central-tool-card input {
+    inline-size: 1.15rem;
+    block-size: 1.15rem;
+    accent-color: var(--ec-accent);
 }
 
-.etch-central-link-row__tools {
+.etch-central-toggle strong { margin-inline-start: auto; color: var(--ec-accent); }
+
+.etch-central-check-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .35rem 1rem; }
+
+.etch-central-tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: .75rem;
+}
+
+.etch-central-tool-card {
     display: flex;
-    align-items: end;
-    gap: 0.35rem;
-    min-block-size: 100%;
+    gap: .75rem;
+    align-items: center;
+    min-block-size: 4.3rem;
+    padding: .85rem;
+    background: var(--ec-surface-2);
+    border: 1px solid var(--ec-border);
+    border-radius: 14px;
 }
 
+.etch-central-tool-card__body { display: grid; gap: .15rem; }
+.etch-central-tool-card__body strong { color: var(--ec-text); }
+.etch-central-tool-card__body em { color: var(--ec-muted); font-style: normal; font-size: .82rem; }
+.etch-central-tool-card.is-detected .etch-central-tool-card__body em { color: var(--ec-success); }
+.etch-central-tool-card.is-missing { opacity: .62; }
+
+.etch-central-segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    padding: .35rem;
+    background: var(--ec-surface-2);
+    border: 1px solid var(--ec-border);
+    border-radius: 999px;
+}
+
+.etch-central-segmented label { position: relative; display: inline-flex; cursor: pointer; }
+.etch-central-segmented input { position: absolute; opacity: 0; pointer-events: none; }
+.etch-central-segmented span {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.25rem;
+    padding-inline: 1rem;
+    color: var(--ec-muted);
+    border-radius: 999px;
+    font-weight: 800;
+}
+.etch-central-segmented input:checked + span { color: #fff; background: linear-gradient(135deg, var(--ec-accent), var(--ec-accent-2)); }
+.etch-central-save-status { margin-block-start: .7rem !important; min-block-size: 1.2em; font-weight: 700; }
+
+.etch-central-links { display: grid; gap: .85rem; }
+.etch-central-link-row {
+    display: grid;
+    grid-template-columns: auto minmax(12rem, 1fr) minmax(16rem, 2fr);
+    gap: .85rem;
+    align-items: end;
+    padding: .85rem;
+    background: var(--ec-surface-2);
+    border: 1px solid var(--ec-border);
+    border-radius: 14px;
+}
+.etch-central-link-row.is-dragging { opacity: .55; }
+.etch-central-link-row label { display: grid; gap: .35rem; color: var(--ec-text); font-weight: 700; }
+.etch-central-link-row input,
+.etch-central-admin input[type="text"],
+.etch-central-admin input[type="url"] {
+    inline-size: 100%;
+    min-block-size: 2.55rem;
+    color: var(--ec-text);
+    background: color-mix(in srgb, var(--ec-surface) 80%, transparent);
+    border: 1px solid var(--ec-border);
+    border-radius: 10px;
+}
+.etch-central-link-row__tools { display: flex; align-items: end; gap: .35rem; min-block-size: 100%; }
 .etch-central-drag-handle,
-.etch-central-move-button {
+.etch-central-move-button,
+.etch-central-remove-button,
+.etch-central-card .button-secondary,
+.etch-central-panel .button-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-inline-size: 2.25rem;
     min-block-size: 2.25rem;
-    padding: 0.35rem 0.5rem;
-    color: var(--etch-central-text);
-    background: #fff;
-    border: 1px solid var(--etch-central-border);
-    border-radius: 8px;
-    cursor: grab;
-}
-
-.etch-central-move-button {
+    padding: .35rem .7rem;
+    color: var(--ec-text);
+    background: color-mix(in srgb, var(--ec-surface) 82%, transparent);
+    border: 1px solid var(--ec-border);
+    border-radius: 9px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
+}
+.etch-central-drag-handle { cursor: grab; }
+
+.etch-central-admin__actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-block-start: .25rem;
+}
+.etch-central-admin__actions .submit { margin: 0; padding: 0; }
+.etch-central-admin__actions .button-primary {
+    min-block-size: 2.55rem;
+    padding-inline: 1.25rem;
+    background: linear-gradient(135deg, var(--ec-accent), color-mix(in srgb, var(--ec-accent) 70%, #1d4ed8));
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 .6rem 1rem color-mix(in srgb, var(--ec-accent) 28%, transparent);
+    font-weight: 800;
 }
 
-.etch-central-drag-handle:focus-visible,
-.etch-central-move-button:focus-visible,
-.etch-central-link-row input:focus-visible {
-    outline: 2px solid var(--etch-central-accent);
+.etch-central-admin input:focus-visible,
+.etch-central-admin button:focus-visible,
+.etch-central-sidebar__nav a:focus-visible {
+    outline: 2px solid var(--ec-accent-2);
     outline-offset: 2px;
 }
 
-@media (max-width: 782px) {
-    .etch-central-link-row {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 1100px) {
+    .etch-central-shell { grid-template-columns: 1fr; }
+    .etch-central-sidebar { border-inline-end: 0; border-block-end: 1px solid var(--ec-border); }
+    .etch-central-sidebar__nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .etch-central-sidebar__version { margin-block-start: 0; }
+}
 
-    .etch-central-link-row__tools {
-        align-items: center;
-    }
+@media (max-width: 782px) {
+    .etch-central-admin { margin-inline-end: .75rem; }
+    .etch-central-admin__grid { grid-template-columns: 1fr; }
+    .etch-central-link-row { grid-template-columns: 1fr; }
+    .etch-central-link-row__tools { align-items: center; flex-wrap: wrap; }
 }

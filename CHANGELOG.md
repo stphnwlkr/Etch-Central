@@ -1,5 +1,55 @@
 # Changelog
 
+## 1.5.0 - 2026-06-05
+- Established 1.5.0 as the new Etch Central baseline release.
+- Consolidated Dynamic Post Type Menu functionality into Etch Central.
+- Confirmed Flowguard-inspired admin interface as the primary admin direction.
+- Added dedicated Settings and Resources admin structure to the baseline feature set.
+- Added editable Etch Resources with default prepopulated links.
+- Added repeater-based Quick Links with add, remove, and reorder support.
+- Added individual detected tool controls for ACF, Meta Box, ACPT, JetEngine, and WPCodeBox.
+- Kept Detected Tools enabled by default while allowing only actually detected tools to be enabled.
+- Added Auto, Light, and Dark appearance modes with instant automatic persistence.
+- Added searchable content browsers for enabled posts, pages, media, and public custom post types.
+- Added All, Mine, and New content actions to the sticky search interface.
+- Updated README and changelog to document the new consolidated baseline.
+
+## 1.4.2 - 2026-06-05
+- Adjusted dark-mode admin text to reduce glare.
+- Moved content-type All/Mine/New actions into a horizontal sticky search toolbar.
+- Added concise action labels with full accessible labels and tooltips.
+
+## 1.4.1 - 2026-06-05
+
+- Refreshed the admin interface with a Flowguard-inspired sidebar shell.
+- Added instant Auto / Light / Dark appearance switching with automatic persistence.
+- Updated Detected Tools so inactive integrations are shown as unavailable and cannot be enabled.
+- Kept the Detected Tools section enabled by default.
+
+## 1.4.0 - 2026-06-05
+- Restructured the admin area into Settings and Resources pages.
+- Added per-tool controls for detected integrations.
+- Moved Quick Links and Etch Resources to the Resources page.
+- Made Etch Resources editable while preserving default prepopulated links.
+- Converted Quick Links and Etch Resources to repeater-style managers with add, remove, and reorder controls.
+
+
+## 1.3.0 - 2026-06-05
+- Added optional display control for detected plugin tools.
+- Merged Dynamic Post Type Menu cleanup controls: hide built-in Posts and hide the WordPress + New menu.
+- Enabled content type menus by default for selectable public post types.
+- Modernized the settings screen with an admin appearance option for auto, light, and dark modes.
+
+
+
+
+## 1.3.0 - 2026-06-05
+
+- Added detected tool menus for Advanced Custom Fields, Meta Box, ACPT, JetEngine, and WPCodeBox.
+- Enhanced enabled content type menus with All, My, and Add New links before the searchable published item list.
+- Updated settings storage to use Quick Links while preserving existing shortcut data.
+- Expanded content type support to include UI-enabled post types such as Media while excluding internal feature post types.
+
 All notable Etch Central changes are documented here, including the iteration history that led to the stable 1.0.0 launcher.
 
 
