@@ -1,48 +1,89 @@
 # Etch Central
 
-Etch Central is a WordPress admin bar launcher for Etch-powered sites. It provides one central place to open the current content item, current template, templates, patterns, enabled content types, Etch resources, and personal Etch shortcuts.
+Centralized access to the content that matters.
 
-Version 1.0.0 marked the command-center launcher as the stable direction for the plugin. Version 1.0.2 includes additional admin bar layout isolation and link spacing fixes for the command center panel.
+Etch Central transforms the WordPress admin bar into a unified command center for Etch-powered websites. Quickly access templates, patterns, pages, posts, media, custom post types, resources, tools, and shortcuts without navigating multiple admin screens.
+
+Version 1.5.0 is the new baseline release. It consolidates content navigation, editable resources, Quick Links, detected tool integrations, Dynamic Post Type Menu functionality, and the modern Flowguard-inspired admin interface into one plugin for Etch sites.
+
+## 1.5.0 Highlights
+
+- New baseline release for Etch Central.
+- Flowguard-inspired Settings and Resources admin pages.
+- Instant Auto / Light / Dark appearance switching with automatic persistence.
+- Dynamic Post Type Menu functionality merged into Etch Central.
+- Optional admin cleanup controls.
+- Individual detected tool controls for ACF, Meta Box, ACPT, JetEngine, and WPCodeBox.
+- Only detected tools can be enabled.
+- Dedicated Resources page with editable Etch Resources.
+- Repeater-based Quick Links with add, remove, and reorder controls.
+- Searchable content browsers for posts, pages, media, and public custom post types.
+- Horizontal All / Mine / New content actions in the sticky search area.
 
 ## What Etch Central Does
 
-Etch Central reduces the amount of WordPress navigation needed when building with Etch. Instead of jumping between the dashboard, site editor, templates, patterns, and front-end edit links, users can open the Etch Central launcher from the admin bar and move directly to the thing they need.
+Etch Central reduces the amount of WordPress navigation needed when building with Etch. Instead of jumping between the dashboard, site editor, templates, patterns, post types, plugin tools, and resource links, users can open Etch Central from the admin bar and move directly to the thing they need.
 
-The plugin is intentionally a launcher, not a replacement for the native WordPress or Etch command palettes.
+The plugin is intentionally a command-center launcher, not a replacement for the native WordPress or Etch command palettes.
 
 ## Key Features
 
+### Content Navigation
+
 - Adds an **Etch Central** item to the WordPress admin bar.
-- Uses a compact command-center style launcher.
-- Provides left-column navigation and right-column searchable panels.
 - Shows context-aware links for the current content item when available.
 - Shows a current template link when the active WordPress template can be resolved.
 - Provides searchable browsers for templates and patterns.
-- Provides optional searchable browsers for enabled public post types.
-- Keeps content-type browsers disabled by default.
-- Includes official Etch resource links.
-- Includes user-managed **My Etch Shortcuts** links.
-- Supports up to 10 custom shortcuts.
-- Supports drag-and-drop shortcut ordering in settings.
-- Includes keyboard-accessible move up/down controls for shortcut ordering.
-- Allows admins to choose which roles can see Etch Central.
-- Allows individual launcher sections to be enabled or disabled.
-- Includes optional cleanup of plugin settings on deactivation.
-- Includes focus, spacing, and overflow refinements for accessibility.
-- Isolates the launcher UI from common theme and framework spacing rules, including Automatic CSS section gap defaults.
+- Provides searchable browsers for enabled public post types.
+- Adds All, Mine, and New quick actions for enabled content types.
+- Uses a sticky search interface for content panels.
+
+### Tool Detection
+
+Etch Central can detect supported tools and show only the integrations that are actually present on the site. Each detected tool can be enabled or disabled individually.
+
+Supported detections include:
+
+- Advanced Custom Fields (ACF)
+- Meta Box
+- ACPT
+- JetEngine
+- WPCodeBox
+
+### Resources and Quick Links
+
+- Dedicated Resources management page.
+- Editable Etch Resources list.
+- Pre-populated default resources.
+- Repeater-based Quick Links.
+- Add, remove, and reorder controls.
+- Admin-managed links for consistent team workflows.
+
+### Admin Experience
+
+- Modern Flowguard-inspired interface.
+- Separate Settings and Resources screens.
+- Auto, Light, and Dark appearance modes.
+- Instant theme switching without a manual save action.
+- Card-based settings layout.
+- Accessibility-focused controls.
+
+### Administrative Tools
+
+- Dynamic Post Type Menu functionality integrated directly into Etch Central.
+- Optional admin cleanup controls.
+- Hide unused menu items.
+- Simplify the WordPress admin experience for Etch-focused builds.
 
 ## Requirements
 
 - WordPress 6.9.4 or later.
+- Tested through WordPress 7.0.
 - PHP 8.3 or later.
-- Etch must be installed and active.
+- Etch Builder recommended.
 - A logged-in user with an allowed role.
 
 Etch Central checks for Etch before outputting its admin bar tools. If Etch is not active, the launcher will not appear.
-
-## Tested Up To
-
-- WordPress 7.0
 
 ## Installation
 
